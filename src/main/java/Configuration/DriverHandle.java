@@ -4,6 +4,8 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
@@ -18,29 +20,53 @@ public class DriverHandle {
 
     public WebDriver getDriver() {
         this.browserName = System.getProperty("browserName");
-        log.info("Choosed browsername: " + browserName);
+        log.info("Chosen browser: " + browserName);
         switch (this.browserName) {
             case "chrome":
-                ChromeOptions chromeOptions = new ChromeOptions();
-                WebDriverManager.chromedriver().setup();
-                chromeOptions.addArguments("start-maximized");
-                driver = new ChromeDriver(chromeOptions);
+                driver = getChromeDriver();
                 break;
             case "firefox":
-                FirefoxOptions firefoxOptions = new FirefoxOptions();
-                WebDriverManager.firefoxdriver().setup();
-                firefoxOptions.addArguments("start-maximized");
-                driver = new FirefoxDriver(firefoxOptions);
+                driver = getFireFoxDriver();
+                break;
+            case "ie":
+                driver = getIeDriver();
+                break;
+            case "edge":
+                driver = getEdgeDriver();
                 break;
             default:
-                InternetExplorerOptions optionsDefault = new InternetExplorerOptions();
-                WebDriverManager.iedriver().setup();
-                driver = new InternetExplorerDriver(optionsDefault);
+                driver = getChromeDriver();
         }
 
         return this.driver;
     }
 
+
+    private WebDriver getChromeDriver() {
+        ChromeOptions chromeOptions = new ChromeOptions();
+        WebDriverManager.chromedriver().setup();
+        chromeOptions.addArguments("start-maximized");
+        return new ChromeDriver(chromeOptions);
+    }
+
+    private WebDriver getFireFoxDriver() {
+        FirefoxOptions firefoxOptions = new FirefoxOptions();
+        WebDriverManager.firefoxdriver().setup();
+        firefoxOptions.addArguments("start-maximized");
+        return new FirefoxDriver(firefoxOptions);
+    }
+
+    private WebDriver getIeDriver() {
+        InternetExplorerOptions ieOptions = new InternetExplorerOptions();
+        WebDriverManager.iedriver().setup();
+        return new InternetExplorerDriver(ieOptions);
+    }
+
+    private WebDriver getEdgeDriver() {
+        EdgeOptions edgeOptions = new EdgeOptions();
+        WebDriverManager.edgedriver().setup();
+        return new EdgeDriver(edgeOptions);
+    }
 
 }
 
