@@ -5,10 +5,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class RegisterPage extends BasePage {
+    private static Logger log = LoggerFactory.getLogger("RegisterPage.class");
 
     @FindBy(css = ".custom-radio")
     private List<WebElement> socialTitleRadio;
@@ -60,6 +63,12 @@ public class RegisterPage extends BasePage {
 //            }
 //        }
 //    }
+
+    public String getUserData() {
+        String user = getElementAttribute(firstName, "value") + " " + getElementAttribute(lastName, "value");
+        log.info("User name and lastname: " + user);
+        return user;
+    }
 
     private void checkAllCheckBoxes() {
         for (WebElement check : checkBoxValueList) {

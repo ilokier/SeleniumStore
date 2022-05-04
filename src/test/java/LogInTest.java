@@ -13,7 +13,9 @@ public class LogInTest extends BaseTest {
         homePage.goToLoginPage();
         loginPage.goToRegistrationForm();
         registerPage.fillRegisterForm(userFactory.getRandomUser());
-        //todo asertion
+        String registeredUserData = registerPage.getUserData();
+        registerPage.submitRegistrationForm();
+        assertThat(registeredUserData, equalTo(homePage.getUserSignedName()));
     }
 
     @Test

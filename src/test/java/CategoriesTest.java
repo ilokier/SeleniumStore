@@ -12,7 +12,7 @@ public class CategoriesTest extends BaseTest {
     List<WebElement> subcategories = new ArrayList<>();
 
     @Test
-    public void shouldGoToChosenCategoryPage() {
+    public void shouldDisplayEveryCategoryPage() {
         int categoriesAmount = homePage.getMainCategoriesSize();
         SoftAssertions softAssertions = new SoftAssertions();
         for (int i = 0; i < categoriesAmount; i++) {
@@ -24,40 +24,24 @@ public class CategoriesTest extends BaseTest {
         softAssertions.assertAll();
     }
 
-    //  @Test
-//    public void shouldGoToClothesSubcategoryPage() throws InterruptedException {
-//
-//        homePage.moveToMainCategory(0);
-//        // int subCategoriesAmount = homePage.getSubcategoryAmount(subcategories, 0);
-//        subcategories = homePage.getSubcategoryAmount(0);
-//        SoftAssertions softAssertions = new SoftAssertions();
-//        for (int i = 0; i < subcategories.size(); i++) {
-//            homePage.moveToMainCategory(0);
-//            homePage.goToSubcategory(i);
-//            softAssertions.assertThat(homePage.getSubcategoryName(i).equals(categoriesPage.getCategoryName()));
-//            softAssertions.assertThat(categoriesPage.checkIfFilerMenuIsDisplayed()).isTrue();
-//            softAssertions.assertThat(categoriesPage.getLabelWithNumberOfProductsText().contains(categoriesPage.countNumberOfProductsInCategory()));
-//        }
-//        softAssertions.assertAll();
-//    }
-//
-//    @Test
-//    public void shouldGoToAccesoriesSubcategoryPage() throws InterruptedException {
-//        subcategories = homePage.getSubcategoryAmount(1);
-//        homePage.moveToMainCategory(1);
-//        // int subCategoriesAmount = homePage.getSubcategoryAmount(1);
-//        SoftAssertions softAssertions = new SoftAssertions();
-//        for (int i = 0; i < subcategories.size(); i++) {
-//            // driver.navigate().refresh();
-//            homePage.moveToMainCategory(1);
-//            homePage.goToSubcategory(i);
-//            softAssertions.assertThat(homePage.getSubcategoryName(i).equals(categoriesPage.getCategoryName()));
-//            softAssertions.assertThat(categoriesPage.checkIfFilerMenuIsDisplayed()).isTrue();
-//            softAssertions.assertThat(categoriesPage.getLabelWithNumberOfProductsText().contains(categoriesPage.countNumberOfProductsInCategory()));
-//        }
-//        softAssertions.assertAll();
-//    }
-
+    @Test
+    public void shouldDisplayEverySubcategoryPage() throws InterruptedException {
+        int categoriesAmount = homePage.getMainCategoriesSize();
+        SoftAssertions softAssertions = new SoftAssertions();
+        for (int j = 0; j < categoriesAmount; j++) {
+            homePage.goToMainCategory(j);
+            int subCategoriesAmount = homePage.getSubCategoriesListSize();
+            for (int i = 0; i < subCategoriesAmount; i++) {
+                String subCategoryName = homePage.getSubcategoryName(i);
+                homePage.goToSubcategory(i);
+                softAssertions.assertThat(subCategoryName.equals(categoriesPage.getCategoryName()));
+                softAssertions.assertThat(categoriesPage.checkIfFilerMenuIsDisplayed()).isTrue();
+                softAssertions.assertThat(categoriesPage.getLabelWithNumberOfProductsTextList().contains(String.valueOf(categoriesPage.countNumberOfProductsInCategory())));
+                driver.navigate().back();
+            }
+        }
+        softAssertions.assertAll();
+    }
 
     @ParameterizedTest
     @CsvSource({"9, 10", "9, 29", "27,29"})

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class HomePage extends BasePage {
     private static Logger log = LoggerFactory.getLogger("HomePage.class");
-    List<WebElement> subcategories = new ArrayList<>();
+    // List<WebElement> subcategories = new ArrayList<>();
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -32,8 +32,15 @@ public class HomePage extends BasePage {
     // @FindBy(css = ".category a:not(.dropdown-submenu)")
     @FindBy(css = "#top-menu>.category")
     private List<WebElement> mainCategoriesList;
-    @FindBy(css = ".dropdown-submenu")
+
+
+    // @FindBy(css = ".dropdown-submenu")
+    @FindBy(css = ".category-sub-menu a")
     private List<WebElement> subCategoriesList;
+
+
+    @FindBy(css = ".account .hidden-sm-down")
+    private WebElement signName;
 
     //categoryPage
     @FindBy(css = ".category-top-menu>li>a")
@@ -59,33 +66,22 @@ public class HomePage extends BasePage {
         return this;
     }
 
-    public void moveToMainCategory(int categoryIndex) throws InterruptedException {
-        // moveToElement(driver.findElement(By.cssSelector(".top-menu")));
-        moveToElement(mainCategoriesList.get(categoryIndex));
-        log.info("im in category");
+    public void goToMainCategory(int categoryIndex) {
+        clickOnElement(mainCategoriesList.get(categoryIndex));
     }
 
-    public void goToSubcategory(int i) throws InterruptedException {
-        clickOnElement(subcategories.get(i));
+    public void goToSubcategory(int index) {
+        clickOnElement(subCategoriesList.get(index));
     }
 
-    public List<WebElement> getSubcategoryAmount(int index) throws InterruptedException {
-        moveToElement(mainCategoriesList.get(index));
-        for (WebElement webElement : subCategoriesList) {
-            if (webElement.isDisplayed()) {
-                subcategories.add(webElement);
-
-            }
+    public int getSubCategoriesListSize() {
+        log.info("ListSize: " + subCategoriesList.size());
+        if (subCategoriesList.isEmpty()) {
+            log.info("There is no subcategory for category: " + getCategoryName());
         }
-        log.info("list size is: " + subcategories.size());
-
-        return subcategories;
+        return subCategoriesList.size();
     }
-//    public String searchRandomElement() {
-//        String randomProduct = getRandomListElementText(productsList);
-//        log.info(randomProduct);
-//        return randomProduct;
-//    }
+
 
     public String searchRandomProduct() {
         String searchText = getRandomListElementText(productsList);
@@ -118,7 +114,7 @@ public class HomePage extends BasePage {
         return mainCategoriesList.size();
     }
 
-    //nazwa kategorii z głównego menu
+
     public String getCategoryName() {
         String menuName = (getElementText(categoryName));
         log.info("Chosen category is: " + menuName);
@@ -130,14 +126,17 @@ public class HomePage extends BasePage {
         return subcatName;
     }
 
-
     // TODO: 21.04.2022 same for subcategories
+
+
     public void goToPricesDrop() {
         scrollToElement(pricesDrop);
         clickOnElement(pricesDrop);
     }
 
-
+    public String getUserSignedName() {
+        return getElementText(signName);
+    }
 }
 
 
