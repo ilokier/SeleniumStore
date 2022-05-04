@@ -1,0 +1,29 @@
+browser:
+  browserName: chrome
+  headlessBrowser: false
+  webElementTimeOut: 15
+
+environment:
+  test:
+    envName: test
+    appUrl: http://146.59.32.4/index.php
+    firstName: Diana
+    lastName: Spencer
+    email: diana.123@gmail.com
+    password: xyz1234
+    birthDate: 05/30/1970
+    expectedTitle: My account
+    expectedMsg: Form send with success
+    active: true
+
+  test2:
+    envName: test2
+    appUrl: http://146.59.32.4/index.php
+    firstName: Jan
+    lastName: Nowak
+    email: jannowak@tes.com
+    password: abc4321
+    birthDate: 02/28/1985
+    expectedTitle: My account
+    expectedMsg: Form send with success
+    active: false
