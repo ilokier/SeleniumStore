@@ -18,8 +18,8 @@ public class CategoriesPage extends BasePage {
     private WebElement categoryPageName;
     @FindBy(css = "#search_filters")
     private WebElement filterMenu;
-    @FindBy(css = ".ui-slider-range")
-    private WebElement slider;
+    //    @FindBy(css = ".ui-slider-range")
+//    private WebElement slider;
     @FindBy(css = ".faceted-slider")
     private WebElement sliderValues;
     @FindBy(css = ".ui-slider-horizontal  a:last-child")
@@ -30,12 +30,9 @@ public class CategoriesPage extends BasePage {
     WebElement totalProductsAmount;
     @FindBy(css = ".product")
     private List<WebElement> productMiniature;
-    @FindBy(css = ".product-price-and-shipping .price")
-    private List<WebElement> productsPriceList;
     @FindBy(css = ".js-search-filters-clear-all")
     private WebElement clearFilterButton;
 
-    //sale
     @FindBy(css = "#js-product-list-header")
     private WebElement salePageTitle;
 
@@ -47,17 +44,18 @@ public class CategoriesPage extends BasePage {
 
     public String getCategoryName() {
         String name = getElementText(categoryPageName);
+        log.info("Current category is: " + name);
         return name;
     }
 
     public boolean checkIfFilerMenuIsDisplayed() {
-        boolean isfilterDisplayed = false;
+        boolean isFilterDisplayed = false;
         if (filterMenu.isDisplayed()) {
-            isfilterDisplayed = true;
-            log.info("Menu name is: " + getElementText(categoryPageName));
+            isFilterDisplayed = true;
+            log.info("There is filter for price between " + getCurrentFilterValues()[0] + " and " + getCurrentFilterValues()[1]);
             return true;
         } else log.info("There is no filter");
-        return isfilterDisplayed;
+        return isFilterDisplayed;
     }
 
     public int countNumberOfProductsInCategory() {
@@ -84,10 +82,8 @@ public class CategoriesPage extends BasePage {
             nums[0] = String.valueOf(getMinValue());
             nums[1] = String.valueOf(getMaxValue());
         } else nums = dataValues.replaceAll("[^0-9.]+", " ").trim().split(" ");
-        log.info("Min value :" + nums[0] + ", max value: " + nums[1]);
         return nums;
     }
-
 
     public List<Double> getProductPriceList() {
         List<Double> allPrices = new ArrayList<>();
@@ -97,7 +93,6 @@ public class CategoriesPage extends BasePage {
         return allPrices;
     }
 
-
     public void clearFilter() {
         if (sliderValues.getAttribute("data-slider-values").equals("null")) {
             log.info("There is no filter to clear");
@@ -105,51 +100,6 @@ public class CategoriesPage extends BasePage {
             clickOnElement(clearFilterButton);
             log.info("Filter cleared");
         }
-    }
-
-    private double getMinValue() {
-        double minValue = Double.parseDouble(sliderValues.getAttribute("data-slider-min"));
-        return minValue;
-    }
-
-    private double getMaxValue() {
-        double maxValue = Double.parseDouble(sliderValues.getAttribute("data-slider-max"));
-        log.info("Max value is: " + maxValue);
-        return maxValue;
-    }
-
-    private void setMaxPrice(double maxPrice) {
-        scrollToElement(maxSlider);
-        waitToBeVisible(maxSlider);
-        for (double i = getMaxValue(); i > maxPrice; i--) {
-            try {
-                waitForElementToBeClickableBy(".ui-slider-horizontal  a:last-child");
-                clickAndHold(maxSlider);
-                maxSlider.sendKeys(Keys.ARROW_LEFT);
-            } catch (StaleElementReferenceException e) {
-                e.getMessage();
-
-            }
-
-        }
-        release();
-    }
-
-
-    private void setMinPrice(double minPrice) {
-        scrollToElement(minSlider);
-        waitToBeVisible(minSlider);
-        for (double i = getMinValue(); i < minPrice; i++) {
-            try {
-                waitForElementToBeClickable(minSlider);
-                clickAndHold(minSlider);
-                minSlider.sendKeys(Keys.ARROW_RIGHT);
-            } catch (StaleElementReferenceException e) {
-                e.getMessage();
-                e.printStackTrace();
-            }
-        }
-        release();
     }
 
     public String getSalePageCategoryTitle() {
@@ -165,11 +115,11 @@ public class CategoriesPage extends BasePage {
     }
 
     public List<Integer> getDisountValue() {
-        List<Integer> dicsountValueList = new ArrayList<>();
+        List<Integer> discountValueList = new ArrayList<>();
         for (WebElement product : productMiniature) {
-            dicsountValueList.add(new ProductMiniaturePage(product).getDiscountValue());
+            discountValueList.add(new ProductMiniaturePage(product).getDiscountValue());
         }
-        return dicsountValueList;
+        return discountValueList;
     }
 
     public boolean isDiscountPriceDisplayed() {
@@ -178,7 +128,7 @@ public class CategoriesPage extends BasePage {
             if (new ProductMiniaturePage(product).isPriceDisplayed()) {
                 isDiscountDisplayed = true;
             } else {
-                log.info("Discount is not awaliable");
+                log.info("Discount is not available");
             }
         }
         return isDiscountDisplayed;
@@ -190,7 +140,7 @@ public class CategoriesPage extends BasePage {
             if (new ProductMiniaturePage(product).isRegularPriceDisplayed()) {
                 isRegularPriceDisplayed = true;
             } else {
-                log.info("Discount is not awaliable");
+                log.info("Discount is not available");
             }
         }
         return isRegularPriceDisplayed;
@@ -202,7 +152,7 @@ public class CategoriesPage extends BasePage {
             if (new ProductMiniaturePage(product).isDiscountDisplayed()) {
                 isLabelDisplayed = true;
             } else {
-                log.info("Label is not awaliable");
+                log.info("Label is not available");
             }
         }
         return isLabelDisplayed;
@@ -221,4 +171,40 @@ public class CategoriesPage extends BasePage {
         return this;
     }
 
+    private double getMinValue() {
+        return Double.parseDouble(sliderValues.getAttribute("data-slider-min"));
+    }
+
+    private double getMaxValue() {
+        return Double.parseDouble(sliderValues.getAttribute("data-slider-max"));
+    }
+
+    private void setMaxPrice(double maxPrice) {
+        try {
+            scrollToElement(maxSlider);
+            waitForElementToBeClickable(maxSlider);
+            for (double i = getMaxValue(); i > maxPrice; i--) {
+                clickAndHold(maxSlider);
+                maxSlider.sendKeys(Keys.ARROW_LEFT);
+            }
+            release();
+        } catch (StaleElementReferenceException e) {
+            e.getMessage();
+        }
+    }
+
+    private void setMinPrice(double minPrice) {
+        try {
+            scrollToElement(minSlider);
+            waitForElementToBeClickable(minSlider);
+            for (double i = getMinValue(); i < minPrice; i++) {
+                clickAndHold(minSlider);
+                minSlider.sendKeys(Keys.ARROW_RIGHT);
+            }
+            release();
+        } catch (StaleElementReferenceException e) {
+            e.getMessage();
+            e.printStackTrace();
+        }
+    }
 }
