@@ -68,7 +68,7 @@ public class BasePage {
     }
 
     public void clickOnElement(WebElement element) {
-        waitForElementToBeClickableBy(element);
+        waitForElementToBeClickable(element);
         highLightenerMethod(element);
         element.click();
     }
@@ -79,8 +79,12 @@ public class BasePage {
         return todayDate;
     }
 
-    public WebElement waitForElementToBeClickableBy(WebElement element) {
+    public WebElement waitForElementToBeClickable(WebElement element) {
         return wait.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    public WebElement waitForElementToBeClickableBy(String selector) {
+        return wait.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(selector)));
     }
 
     public void sendKeysToElement(WebElement element, String text) {
@@ -116,7 +120,7 @@ public class BasePage {
     public void moveToElement(WebElement element) {
         waitToBeVisible(element);
         actions.moveToElement(element).build().perform();
-        // Thread.sleep(5000);
+
     }
 
     public String getRandomNumberValue(int bound) {
@@ -156,6 +160,15 @@ public class BasePage {
         clickOnElement(element);
     }
 
+    public void clickAndHold(WebElement element) {
+        actions.clickAndHold(element).build().perform();
+    }
+
+    public void release() {
+        actions.release();
+    }
+
+
     public void waitToBeVisible(WebElement element) {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
@@ -176,7 +189,7 @@ public class BasePage {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].setAttribute('style', 'background: lightgreen; border: 5px solid green;')", element);
         try {
-            Thread.sleep(300);
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

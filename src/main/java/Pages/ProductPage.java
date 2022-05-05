@@ -93,7 +93,7 @@ public class ProductPage extends BasePage {
     }
 
     public Product getRandomProduct() throws InterruptedException {
-        waitForElementToBeClickableBy(addToCartButton);
+        waitForElementToBeClickable(addToCartButton);
         Product randomProduct = new Product(
                 getElementText(productTitle),
                 getElementAttribute(quantityInput, "value"),

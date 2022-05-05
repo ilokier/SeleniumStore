@@ -25,7 +25,7 @@ public class CategoriesTest extends BaseTest {
     }
 
     @Test
-    public void shouldDisplayEverySubcategoryPage() throws InterruptedException {
+    public void shouldDisplayEverySubcategoryPage() {
         int categoriesAmount = homePage.getMainCategoriesSize();
         SoftAssertions softAssertions = new SoftAssertions();
         for (int j = 0; j < categoriesAmount; j++) {
@@ -45,7 +45,7 @@ public class CategoriesTest extends BaseTest {
 
     @ParameterizedTest
     @CsvSource({"9, 10", "9, 29", "27,29"})
-    public void addingFilterShouldReturnMatchesProducts(double minPrice, double maxPrice) {
+    public void addingFilterShouldReturnMatchesProducts(double minPrice, double maxPrice) throws InterruptedException {
         homePage.goToCategoryPage(2);
         categoriesPage.setPriceFilter(minPrice, maxPrice);
         categoriesPage.getCurrentFilterValues();

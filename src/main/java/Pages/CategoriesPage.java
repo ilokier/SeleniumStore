@@ -72,7 +72,6 @@ public class CategoriesPage extends BasePage {
         return label;
     }
 
-
     public void setPriceFilter(double minPrice, double maxPrice) {
         setMaxPrice(maxPrice);
         setMinPrice(minPrice);
@@ -108,25 +107,6 @@ public class CategoriesPage extends BasePage {
         }
     }
 
-    private void setMaxPrice(double maxPrice) {
-        scrollToElement(maxSlider);
-        waitToBeVisible(maxSlider);
-
-        for (double i = getMaxValue(); i > maxPrice; i--) {
-            try {
-                waitForElementToBeClickableBy(maxSlider);
-                maxSlider.sendKeys(Keys.ARROW_LEFT);
-                Thread.sleep(500);
-
-            } catch (StaleElementReferenceException e) {
-                e.getMessage();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
-
     private double getMinValue() {
         double minValue = Double.parseDouble(sliderValues.getAttribute("data-slider-min"));
         return minValue;
@@ -138,22 +118,38 @@ public class CategoriesPage extends BasePage {
         return maxValue;
     }
 
+    private void setMaxPrice(double maxPrice) {
+        scrollToElement(maxSlider);
+        waitToBeVisible(maxSlider);
+        for (double i = getMaxValue(); i > maxPrice; i--) {
+            try {
+                waitForElementToBeClickableBy(".ui-slider-horizontal  a:last-child");
+                clickAndHold(maxSlider);
+                maxSlider.sendKeys(Keys.ARROW_LEFT);
+            } catch (StaleElementReferenceException e) {
+                e.getMessage();
+
+            }
+
+        }
+        release();
+    }
+
+
     private void setMinPrice(double minPrice) {
         scrollToElement(minSlider);
         waitToBeVisible(minSlider);
         for (double i = getMinValue(); i < minPrice; i++) {
             try {
-                waitForElementToBeClickableBy(minSlider);
+                waitForElementToBeClickable(minSlider);
+                clickAndHold(minSlider);
                 minSlider.sendKeys(Keys.ARROW_RIGHT);
-                Thread.sleep(500);
-
             } catch (StaleElementReferenceException e) {
                 e.getMessage();
-            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
+        release();
     }
 
     public String getSalePageCategoryTitle() {
