@@ -54,11 +54,6 @@ public class OrderBuilder {
         return this;
     }
 
-    public OrderBuilder address(String address) {
-        this.address = address;
-        return this;
-    }
-
     public Order build() {
         return new Order(orderReference, products, totalCost, paymentMethod, shippingMethod, shippingCost, status, date);
     }

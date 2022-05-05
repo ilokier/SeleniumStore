@@ -55,14 +55,8 @@ public class CartItemPage {
         return Integer.parseInt(quantity);
     }
 
-
     public WebElement getCurrentAmmountPrice() {
         return currentAmmountPrice;
-    }
-
-    public void setQuantityInput(String quantity) {
-        quantityInput.clear();
-        quantityInput.sendKeys(quantity);
     }
 
     public WebElement getRemoveicon() {

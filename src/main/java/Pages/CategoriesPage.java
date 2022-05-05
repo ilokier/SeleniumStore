@@ -159,11 +159,11 @@ public class CategoriesPage extends BasePage {
     }
 
     public List<String> getDiscountLabelText() {
-        List<String> dicsountLabelList = new ArrayList<>();
+        List<String> discountLabelList = new ArrayList<>();
         for (WebElement product : productMiniature) {
-            dicsountLabelList.add(new ProductMiniaturePage(product).getDisount());
+            discountLabelList.add(new ProductMiniaturePage(product).getDiscount());
         }
-        return dicsountLabelList;
+        return discountLabelList;
     }
 
     public CategoriesPage goToRandomProduct() {

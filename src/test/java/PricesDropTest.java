@@ -18,7 +18,6 @@ public class PricesDropTest extends BaseTest {
             softAssertions.assertThat(categoriesPage.getProductPriceList().get(i).equals(categoriesPage.getRegularProductPriceList().get(i) * categoriesPage.getDisountValue().get(i)));
         }
         softAssertions.assertAll();
-        // TODO: 25.04.2022 popraw loggery 
     }
 }
 

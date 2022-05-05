@@ -17,7 +17,6 @@ public class CheckoutPage extends BasePage {
     private static Logger log = LoggerFactory.getLogger("CheckoutPage.class");
     @FindBy(css = "[name=submitCreate]+[name=continue]")
     private WebElement continueRegisterButton;
-    //adress
     @FindBy(css = "[name=address1]")
     private WebElement adress;
     @FindBy(css = "[name=address2]")
@@ -38,7 +37,6 @@ public class CheckoutPage extends BasePage {
     private WebElement chosenAddress;
     @FindBy(css = "[name=confirm-addresses]")
     private WebElement confirmAddressButton;
-
     @FindBy(css = ".cart-summary-products a")
     private WebElement cartSummaryCollapse;
     @FindBy(css = ".media-body")

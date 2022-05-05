@@ -5,7 +5,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,18 +72,27 @@ public class BasePage {
         element.click();
     }
 
+    public String getRandomNumberValue(int bound) {
+        String random = String.valueOf(new Random().nextInt(bound - 1) + 1);
+        return random;
+    }
+
+    public WebElement getRandomListEl(List<WebElement> elements) {
+        WebElement element = elements.get(new Random().nextInt(elements.size()));
+        scrollToElement(element);
+        return element;
+    }
+
+    public String getRandomListElementText(List<WebElement> elements) {
+        String result = elements.get(new Random().nextInt(elements.size())).getText();
+        log.info("Search product is: " + result);
+        return result;
+    }
+
     public String getTodayDate() {
         String todayDate = format.format(new Date(System.currentTimeMillis()));
         log.info("Today date is: " + todayDate);
         return todayDate;
-    }
-
-    public WebElement waitForElementToBeClickable(WebElement element) {
-        return wait.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(element));
-    }
-
-    public WebElement waitForElementToBeClickableBy(String selector) {
-        return wait.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(selector)));
     }
 
     public void sendKeysToElement(WebElement element, String text) {
@@ -94,7 +102,7 @@ public class BasePage {
         element.sendKeys(text);
     }
 
-    public void sendKeysWithKeys(WebElement element, String text) {
+    public void sendKeysCombination(WebElement element, String text) {
         waitToBeVisible(element);
         highLightenerMethod(element);
         element.click();
@@ -102,7 +110,6 @@ public class BasePage {
         element.sendKeys(text);
         element.sendKeys(Keys.ENTER);
     }
-
 
     public String getElementAttribute(WebElement element, String attribute) {
         waitToBeVisible(element);
@@ -120,31 +127,6 @@ public class BasePage {
     public void moveToElement(WebElement element) {
         waitToBeVisible(element);
         actions.moveToElement(element).build().perform();
-
-    }
-
-    public String getRandomNumberValue(int bound) {
-        String random = String.valueOf(new Random().nextInt(bound - 1) + 1);
-        return random;
-    }
-
-    public Select getRandomSelect(WebElement element) {
-        Select select = new Select(element);
-        List<WebElement> list = select.getOptions();
-        select.selectByIndex(new Random().nextInt(list.size()));
-        return select;
-    }
-
-    public WebElement getRandomListEl(List<WebElement> elements) {
-        WebElement element = elements.get(new Random().nextInt(elements.size()));
-        scrollToElement(element);
-        return element;
-    }
-
-    public String getRandomListElementText(List<WebElement> elements) {
-        String result = elements.get(new Random().nextInt(elements.size())).getText();
-        log.info("Search product is: " + result);
-        return result;
     }
 
     public void scrollToElement(WebElement element) {
@@ -153,46 +135,12 @@ public class BasePage {
         waitToBeVisible(element);
     }
 
-    public void scrollToElementWithClick(WebElement element) {
-        actions.moveToElement(element);
-        actions.perform();
-        highLightenerMethod(element);
-        clickOnElement(element);
-    }
-
     public void clickAndHold(WebElement element) {
         actions.clickAndHold(element).build().perform();
     }
 
     public void release() {
         actions.release();
-    }
-
-
-    public void waitToBeVisible(WebElement element) {
-        wait.until(ExpectedConditions.visibilityOf(element));
-    }
-
-    public void waitToBeNotVisible(WebElement element) {
-        wait.until(ExpectedConditions.invisibilityOf(element));
-    }
-
-    public void waitToListVisible(List<WebElement> elements) {
-        wait.until(ExpectedConditions.visibilityOfAllElements(elements));
-    }
-
-    public void waitForAlert() {
-        wait.until(ExpectedConditions.alertIsPresent());
-    }
-
-    public void highLightenerMethod(WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].setAttribute('style', 'background: lightgreen; border: 5px solid green;')", element);
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public double getDoubleValueFromPrice(String price) {
@@ -204,6 +152,28 @@ public class BasePage {
     public String getQuantityValueOfProduct(String quantity) {
         quantity = quantity.replace("x", "");
         return quantity;
+    }
+
+    public void waitToBeVisible(WebElement element) {
+        wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    public void waitToListVisible(List<WebElement> elements) {
+        wait.until(ExpectedConditions.visibilityOfAllElements(elements));
+    }
+
+    public WebElement waitForElementToBeClickable(WebElement element) {
+        return wait.ignoring(StaleElementReferenceException.class).until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    public void highLightenerMethod(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute('style', 'background: lightgreen; border: 5px solid green;')", element);
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 }

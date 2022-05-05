@@ -29,7 +29,7 @@ public class RegisterPage extends BasePage {
     private List<WebElement> checkBoxValueList;
     @FindBy(css = ".custom-checkbox input")
     private List<WebElement> checkBoxList;
-    @FindBy(css = ".custom-checkbox input")
+    @FindBy(css = ".custom-checkbox input[required]")
     private List<WebElement> requiredCheckBoxList;
     @FindBy(css = ".form-control-submit")
     private WebElement submitButton;
@@ -49,20 +49,15 @@ public class RegisterPage extends BasePage {
         sendKeysToElement(birthday, user.getBirthDate());
         //checkRequiredBoxes();
         checkAllCheckBoxes();
-
-
         return this;
     }
 
-//    private void checkRequiredBoxes() {
-//        for (WebElement checkBox : checkBoxValueList) {
-//            scrollToElement(checkBox);
-//            WebElement requiredCheckBox = checkBox.findElement(By.cssSelector(".custom-checkbox input"));
-//            if (element.hasSttribute.equalTo("required")) {
-//                requiredCheckBox.click();
-//            }
-//        }
-//    }
+    private void checkRequiredBoxes() {
+        scrollToElement(checkBoxValueList.get(2));
+        for (WebElement requiredCheckBox : requiredCheckBoxList) {
+            requiredCheckBox.click();
+        }
+    }
 
     public String getUserData() {
         String user = getElementAttribute(firstName, "value") + " " + getElementAttribute(lastName, "value");

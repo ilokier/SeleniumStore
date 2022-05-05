@@ -126,9 +126,6 @@ public class HomePage extends BasePage {
         return subcatName;
     }
 
-    // TODO: 21.04.2022 same for subcategories
-
-
     public void goToPricesDrop() {
         scrollToElement(pricesDrop);
         clickOnElement(pricesDrop);

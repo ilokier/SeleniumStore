@@ -40,7 +40,7 @@ public class ProductMiniaturePage {
     }
 
     public int getDiscountValue() {
-        String discount = getDisount();
+        String discount = getDiscount();
         discount = discount.replace("%", "").replace("-", "");
         //String discount2 = discount.replace("-", "");
         log.info(discount);
@@ -54,7 +54,7 @@ public class ProductMiniaturePage {
         return title;
     }
 
-    public String getDisount() {
+    public String getDiscount() {
         return discount.getText();
     }
 

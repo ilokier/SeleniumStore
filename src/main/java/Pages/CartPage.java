@@ -16,8 +16,6 @@ import java.util.Map;
 public class CartPage extends BasePage {
     private static Logger log = LoggerFactory.getLogger("CartPage.class");
 
-    @FindBy(css = ".card-block h1")//same as category page
-    private WebElement cartPageName;
     @FindBy(css = ".cart-item")
     private List<WebElement> cartItem;
     @FindBy(css = ".cart-total span:last-child")
@@ -59,7 +57,7 @@ public class CartPage extends BasePage {
     }
 
     public void changeProducyQuantity(List<WebElement> cartItem) {
-        sendKeysWithKeys(new CartItemPage(cartItem.get(0)).getQuantityInput(), "5");
+        sendKeysCombination(new CartItemPage(cartItem.get(0)).getQuantityInput(), "5");
         driver.navigate().refresh();
     }
 

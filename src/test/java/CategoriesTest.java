@@ -2,14 +2,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.openqa.selenium.WebElement;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesTest extends BaseTest {
     private List<Double> filteredList;
-    List<WebElement> subcategories = new ArrayList<>();
 
     @Test
     public void shouldDisplayEveryCategoryPage() {
@@ -45,16 +42,16 @@ public class CategoriesTest extends BaseTest {
 
     @ParameterizedTest
     @CsvSource({"9, 10", "9, 29", "27,29"})
-    public void addingFilterShouldReturnMatchesProducts(double minPrice, double maxPrice) throws InterruptedException {
+    public void addingFilterShouldReturnMatchesProducts(double minPrice, double maxPrice) {
         homePage.goToCategoryPage(2);
         categoriesPage.setPriceFilter(minPrice, maxPrice);
         categoriesPage.getCurrentFilterValues();
         filteredList = categoriesPage.getProductPriceList();
         categoriesPage.clearFilter();
-        assertvalueIsBetween(filteredList, minPrice, maxPrice);
+        assertValueIsBetween(filteredList, minPrice, maxPrice);
     }
 
-    private static boolean assertvalueIsBetween(List<Double> values, double min, double max) {
+    private static boolean assertValueIsBetween(List<Double> values, double min, double max) {
         boolean condition = false;
         if (values.isEmpty()) {
             condition = true;

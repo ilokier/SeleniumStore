@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+
 public class CartTest extends BaseTest {
     private static Logger log = LoggerFactory.getLogger("CartTest.class");
     Product randomProduct;
@@ -30,10 +32,10 @@ public class CartTest extends BaseTest {
         popUpProduct = productPage.getPopUpProduct();
         String label = productPage.getLabelWithQuantity();
         productPage.continueShoping();
-        softAssertions.assertThat(randomProduct.toString().equals(popUpProduct.toString()));
-        softAssertions.assertThat(cartQuantityBefore).isEqualTo(productPage.getCartQuantity() - Integer.parseInt(randomProduct.getQuantity()));
-        softAssertions.assertThat(label.contains(String.valueOf(productPage.getCartQuantity())));
-        softAssertions.assertAll();
+        assertThat(randomProduct.toString().equals(popUpProduct.toString()));
+        assertThat(cartQuantityBefore).isEqualTo(productPage.getCartQuantity() - Integer.parseInt(randomProduct.getQuantity()));
+        assertThat(label.contains(String.valueOf(productPage.getCartQuantity())));
+
     }
 
     @Test
@@ -87,7 +89,6 @@ public class CartTest extends BaseTest {
             softAssertions.assertThat(cartPage.getTotalBasketPrice()).isEqualTo(cartPage.countTotalBasketValue(cartProducts) + cartPage.getShippingPrice());
         }
         softAssertions.assertAll();
-        //todo checkout
     }
 
 }
