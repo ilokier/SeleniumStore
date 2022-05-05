@@ -1,6 +1,7 @@
 import Configuration.AppProperties;
 import Configuration.DriverHandle;
 import Pages.*;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -48,9 +49,9 @@ public class BaseTest {
 
     }
 
-//    @AfterAll
-//    static void quit() {
-//        driver.quit();
-//        log.debug("<<<<<<driver closed properly>>>>>");
-//    }
+    @AfterAll
+    static void quit() {
+        driver.quit();
+        log.debug("<<<<<<driver closed properly>>>>>");
+    }
 }

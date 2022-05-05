@@ -82,9 +82,9 @@ public class CheckoutPage extends BasePage {
 
     public CheckoutPage fillAdressForm() {
         sendKeysToElement(adress, getRandomAdress());
+        new Select(selectCountry).selectByValue("14");
         sendKeysToElement(city, getRandomCity());
         sendKeysToElement(postalCode, getRandomPostalCode());
-        new Select(selectCountry).selectByValue("14");
         return this;
     }
 
@@ -141,7 +141,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage continueCheckout() {
-        clickOnElement(confirmAddressButton);
+        confirmAddressButton.click();
         return this;
     }
 

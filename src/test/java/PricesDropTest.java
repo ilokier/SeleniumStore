@@ -2,13 +2,12 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 public class PricesDropTest extends BaseTest {
-
+    SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
     public void shouldGoToSaleSiteAndGiveDiscountValues() {
         homePage.goToPricesDrop();
         int productsAmount = categoriesPage.countNumberOfProductsInCategory();
-        SoftAssertions softAssertions = new SoftAssertions();
         for (int i = 0; i < productsAmount; i++) {
             softAssertions.assertThat(categoriesPage.getSalePageCategoryTitle().equals("ON SALE"));
             softAssertions.assertThat(categoriesPage.isDiscountPriceDisplayed()).isTrue();

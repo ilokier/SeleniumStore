@@ -29,7 +29,7 @@ public class CheckoutTest extends BaseTest {
 
     @Test
     public void shouldGoToOrderCheckoutWithSucess() {
-        addRandomProductsToCart(5);
+        addRandomProductsToCart(4); //change to 5
         cartProducts = cartPage.getCartProducts();
         productPage.proceedToCheckout();
         checkoutPage.fillAdressForm()

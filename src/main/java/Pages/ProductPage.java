@@ -60,14 +60,14 @@ public class ProductPage extends BasePage {
         if (productTitle.getText().contains("CUSTOMIZABLE")) {
             setCustomText();
         }
-        scrollToElement(quantityInput);
+        moveToElement(quantityInput);
         sendKeysToElement(quantityInput, randomQuantity);
         return randomQuantity;
     }
 
 
     public ProductPage addToCart() {
-        scrollToElement(addToCartButton);
+        moveToElement(addToCartButton);
         clickOnElement(addToCartButton);
         return this;
     }

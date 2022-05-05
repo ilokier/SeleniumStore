@@ -79,7 +79,7 @@ public class BasePage {
 
     public WebElement getRandomListEl(List<WebElement> elements) {
         WebElement element = elements.get(new Random().nextInt(elements.size()));
-        scrollToElement(element);
+        moveToElement(element);
         return element;
     }
 

@@ -1,5 +1,6 @@
 import Models.Product;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -20,6 +21,12 @@ public class CartTest extends BaseTest {
     Map<String, Integer> productQuantityMap;
     Map<String, Integer> cartProductQuantityMap;
     SoftAssertions softAssertions = new SoftAssertions();
+
+    @AfterEach
+    public void after() {
+        productPage.goToCart();
+        cartPage.makeBasketEmpty();
+    }
 
     @Test
     public void shouldHaveChosenProductsInCart() throws InterruptedException {

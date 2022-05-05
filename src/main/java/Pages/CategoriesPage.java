@@ -94,9 +94,11 @@ public class CategoriesPage extends BasePage {
     }
 
     public void clearFilter() {
+        waitToBeVisible(sliderValues);
         if (sliderValues.getAttribute("data-slider-values").equals("null")) {
             log.info("There is no filter to clear");
         } else {
+            waitForElementToBeClickable(clearFilterButton);
             clickOnElement(clearFilterButton);
             log.info("Filter cleared");
         }
@@ -182,8 +184,9 @@ public class CategoriesPage extends BasePage {
     private void setMaxPrice(double maxPrice) {
         try {
             scrollToElement(maxSlider);
-            waitForElementToBeClickable(maxSlider);
+            waitToBeVisible(maxSlider);
             for (double i = getMaxValue(); i > maxPrice; i--) {
+                waitForElementToBeClickable(maxSlider);
                 clickAndHold(maxSlider);
                 maxSlider.sendKeys(Keys.ARROW_LEFT);
             }
@@ -196,8 +199,9 @@ public class CategoriesPage extends BasePage {
     private void setMinPrice(double minPrice) {
         try {
             scrollToElement(minSlider);
-            waitForElementToBeClickable(minSlider);
+            waitToBeVisible(minSlider);
             for (double i = getMinValue(); i < minPrice; i++) {
+                waitForElementToBeClickable(minSlider);
                 clickAndHold(minSlider);
                 minSlider.sendKeys(Keys.ARROW_RIGHT);
             }

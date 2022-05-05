@@ -114,4 +114,13 @@ public class CartPage extends BasePage {
         driver.navigate().refresh();
         log.info("There is " + cartItem.size() + " items in cart");
     }
+
+    public void makeBasketEmpty() {
+        int i;
+        for (i = cartItem.size(); i > 0; i--) {
+            clickOnElement(new CartItemPage(cartItem.get(i - 1)).getRemoveicon());
+            driver.navigate().refresh();
+        }
+
+    }
 }

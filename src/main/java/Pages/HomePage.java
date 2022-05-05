@@ -89,24 +89,23 @@ public class HomePage extends BasePage {
         return searchText;
     }
 
-    public String getSearchResultText() {
+    public List<String> getSearchResultText() {
         clickOnElement(searchButton);
-        String resultItem = null;
+        List<String> resultItems = new ArrayList<>();
         for (WebElement searchResult : searchResults) {
-            resultItem = searchResult.getText();
-            log.info("Result item: " + resultItem);
+            resultItems.add(searchResult.getText());
         }
-        return resultItem;
+        log.info("Searching results on page: " + resultItems);
+        return resultItems;
     }
 
     public List<String> getSearchResultDropdownText() {
         List<String> resultItems = new ArrayList<>();
         waitToListVisible(dropdownSearchList);
         for (WebElement searchResult : dropdownSearchList) {
-            String resultItem = searchResult.getText();
-            log.info("Result item: " + resultItem);
-            resultItems.add(resultItem);
+            resultItems.add(searchResult.getText());
         }
+        log.info("Searching results in dropdown: " + resultItems);
         return resultItems;
     }
 
@@ -114,10 +113,9 @@ public class HomePage extends BasePage {
         return mainCategoriesList.size();
     }
 
-
     public String getCategoryName() {
         String menuName = (getElementText(categoryName));
-        log.info("Chosen category is: " + menuName);
+        log.info("Category is: " + menuName);
         return menuName;
     }
 
@@ -127,7 +125,7 @@ public class HomePage extends BasePage {
     }
 
     public void goToPricesDrop() {
-        scrollToElement(pricesDrop);
+        moveToElement(pricesDrop);
         clickOnElement(pricesDrop);
     }
 

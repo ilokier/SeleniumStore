@@ -3,10 +3,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesTest extends BaseTest {
-    private List<Double> filteredList;
+    List<Double> filteredList = new ArrayList<>();
 
     @Test
     public void shouldDisplayEveryCategoryPage() {
@@ -43,6 +44,7 @@ public class CategoriesTest extends BaseTest {
     @ParameterizedTest
     @CsvSource({"9, 10", "9, 29", "27,29"})
     public void addingFilterShouldReturnMatchesProducts(double minPrice, double maxPrice) {
+
         homePage.goToCategoryPage(2);
         categoriesPage.setPriceFilter(minPrice, maxPrice);
         categoriesPage.getCurrentFilterValues();

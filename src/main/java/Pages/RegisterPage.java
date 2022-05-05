@@ -53,7 +53,7 @@ public class RegisterPage extends BasePage {
     }
 
     private void checkRequiredBoxes() {
-        scrollToElement(checkBoxValueList.get(2));
+        moveToElement(checkBoxValueList.get(2));
         for (WebElement requiredCheckBox : requiredCheckBoxList) {
             requiredCheckBox.click();
         }
@@ -67,7 +67,7 @@ public class RegisterPage extends BasePage {
 
     private void checkAllCheckBoxes() {
         for (WebElement check : checkBoxValueList) {
-            scrollToElement(check);
+            moveToElement(check);
             WebElement checkInput = check.findElement(By.cssSelector(".custom-checkbox input"));
             checkInput.click();
         }
