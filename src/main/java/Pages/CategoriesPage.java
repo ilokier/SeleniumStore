@@ -1,10 +1,7 @@
 package Pages;
 
 import Pages.ProductDetailPages.ProductMiniaturePage;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,8 +84,13 @@ public class CategoriesPage extends BasePage {
 
     public List<Double> getProductPriceList() {
         List<Double> allPrices = new ArrayList<>();
-        for (WebElement product : productMiniature) {
-            allPrices.add(new ProductMiniaturePage(product).getProductPriceValue());
+        try {
+            waitToListVisible(productMiniature);
+            for (WebElement product : productMiniature) {
+                allPrices.add(new ProductMiniaturePage(product).getProductPriceValue());
+            }
+        } catch (StaleElementReferenceException e) {
+            log.info("msg: " + e.getMessage());
         }
         return allPrices;
     }
@@ -98,7 +100,7 @@ public class CategoriesPage extends BasePage {
         if (sliderValues.getAttribute("data-slider-values").equals("null")) {
             log.info("There is no filter to clear");
         } else {
-            waitForElementToBeClickable(clearFilterButton);
+            scrollToElement(clearFilterButton);
             clickOnElement(clearFilterButton);
             log.info("Filter cleared");
         }
@@ -184,31 +186,33 @@ public class CategoriesPage extends BasePage {
     private void setMaxPrice(double maxPrice) {
         try {
             scrollToElement(maxSlider);
-            waitToBeVisible(maxSlider);
             for (double i = getMaxValue(); i > maxPrice; i--) {
-                waitForElementToBeClickable(maxSlider);
                 clickAndHold(maxSlider);
+                waitForElementToBeClickable(maxSlider);
                 maxSlider.sendKeys(Keys.ARROW_LEFT);
             }
             release();
         } catch (StaleElementReferenceException e) {
-            e.getMessage();
+            log.info("msg: " + e.getMessage());
+        } catch (ElementNotInteractableException f) {
+            log.info("msg: " + f.getMessage());
         }
     }
 
     private void setMinPrice(double minPrice) {
         try {
             scrollToElement(minSlider);
-            waitToBeVisible(minSlider);
             for (double i = getMinValue(); i < minPrice; i++) {
-                waitForElementToBeClickable(minSlider);
                 clickAndHold(minSlider);
+                waitForElementToBeClickable(minSlider);
                 minSlider.sendKeys(Keys.ARROW_RIGHT);
             }
             release();
         } catch (StaleElementReferenceException e) {
-            e.getMessage();
+            log.info("msg: " + e.getMessage());
             e.printStackTrace();
+        } catch (ElementNotInteractableException f) {
+            log.info("msg: " + f.getMessage());
         }
     }
 }

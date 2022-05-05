@@ -136,6 +136,7 @@ public class BasePage {
     }
 
     public void clickAndHold(WebElement element) {
+        waitForElementToBeClickable(element);
         actions.clickAndHold(element).build().perform();
     }
 
