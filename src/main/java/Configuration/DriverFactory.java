@@ -1,5 +1,6 @@
 package Configuration;
 
+import Models.Browser;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -13,25 +14,25 @@ import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DriverHandle {
+public class DriverFactory {
     private static Logger log = LoggerFactory.getLogger("BrowserEnvironment.class");
     private WebDriver driver;
-    private String browserName;
+    private Browser browser;
 
     public WebDriver getDriver() {
-        this.browserName = System.getProperty("browserName");
-        log.info("Chosen browser: " + browserName);
-        switch (this.browserName) {
-            case "chrome":
+        this.browser = AppProperties.getInstance().yamlReader.getConfig().getBrowser();
+        log.info("Chosen browser: " + browser);
+        switch (this.browser) {
+            case CHROME:
                 driver = getChromeDriver();
                 break;
-            case "firefox":
+            case FIREFOX:
                 driver = getFireFoxDriver();
                 break;
-            case "ie":
+            case IE:
                 driver = getIeDriver();
                 break;
-            case "edge":
+            case EDGE:
                 driver = getEdgeDriver();
                 break;
             default:
@@ -57,7 +58,7 @@ public class DriverHandle {
     }
 
     private WebDriver getIeDriver() {
-        InternetExplorerOptions ieOptions = new InternetExplorerOptions();
+        InternetExplorerOptions ieOptions = new InternetExplorerOptions().ignoreZoomSettings();
         WebDriverManager.iedriver().setup();
         return new InternetExplorerDriver(ieOptions);
     }
@@ -65,6 +66,7 @@ public class DriverHandle {
     private WebDriver getEdgeDriver() {
         EdgeOptions edgeOptions = new EdgeOptions();
         WebDriverManager.edgedriver().setup();
+        edgeOptions.addArguments("start-maximized");
         return new EdgeDriver(edgeOptions);
     }
 

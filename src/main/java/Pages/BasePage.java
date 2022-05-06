@@ -135,6 +135,11 @@ public class BasePage {
         waitToBeVisible(element);
     }
 
+    public void moveToAndClick(WebElement element) {
+        moveToElement(element);
+        clickOnElement(element);
+    }
+
     public void clickAndHold(WebElement element) {
         waitForElementToBeClickable(element);
         actions.clickAndHold(element).build().perform();

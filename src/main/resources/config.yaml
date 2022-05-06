@@ -1,7 +1,8 @@
-browser:
-  browserName: chrome
-  headlessBrowser: false
-  webElementTimeOut: 15
+browser: CHROME
+#browser: FIREFOX
+#browser: EDGE
+#browser: IE
+
 
 environment:
   test:
@@ -14,6 +15,8 @@ environment:
     birthDate: 05/30/1970
     expectedTitle: My account
     expectedMsg: Form send with success
+    discount: -20%
+    saleCategoryName: ON SALE
     active: true
 
   test2:
@@ -26,4 +29,6 @@ environment:
     birthDate: 02/28/1985
     expectedTitle: My account
     expectedMsg: Form send with success
+    discount: -20%
+    saleCategoryName: ON SALE
     active: false

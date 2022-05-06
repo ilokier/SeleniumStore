@@ -75,16 +75,14 @@ public class CheckoutPage extends BasePage {
         super(driver);
     }
 
-//    public CheckoutPage submitRegisterForm() {
-//        clickOnElement(continueRegisterButton);
-//        return this;
-//    }
 
     public CheckoutPage fillAdressForm() {
         sendKeysToElement(adress, getRandomAdress());
-        new Select(selectCountry).selectByValue("14");
         sendKeysToElement(city, getRandomCity());
         sendKeysToElement(postalCode, getRandomPostalCode());
+        checkInvoiceAdressBox();
+        new Select(selectCountry).selectByValue("14");
+        moveToAndClick(confirmAddressButton);
         return this;
     }
 
@@ -137,13 +135,8 @@ public class CheckoutPage extends BasePage {
         clickOnElement(confirmAddressButton);
         log.info("Chosen address: " + address);
         return address;
-
     }
 
-    public CheckoutPage continueCheckout() {
-        confirmAddressButton.click();
-        return this;
-    }
 
     public boolean hasAllTermsOfServiceText() {
         List<String> ruleTextList = new ArrayList<>();
@@ -173,5 +166,9 @@ public class CheckoutPage extends BasePage {
         return products;
     }
 
-
+    private void checkInvoiceAdressBox() {
+        if (!checkSameAdressForInvoice.isSelected()) {
+            clickOnElement(checkSameAdressForInvoice);
+        }
+    }
 }

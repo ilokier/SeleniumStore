@@ -1,7 +1,7 @@
 import Configuration.AppProperties;
-import Configuration.DriverHandle;
+import Configuration.DriverFactory;
 import Pages.*;
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 
 public class BaseTest {
     private static Logger log = LoggerFactory.getLogger("BaseTest.class");
-    protected static WebDriver driver;
-    protected static DriverHandle driverHandle;
+    protected WebDriver driver;
+    protected static DriverFactory driverFactory;
     private static AppProperties appProperties;
     BasePage basePage;
     HomePage homePage;
@@ -27,14 +27,14 @@ public class BaseTest {
     @BeforeAll
     static void beforeAll() {
         appProperties = AppProperties.getInstance();
-        driverHandle = new DriverHandle();
-        driver = driverHandle.getDriver();
-        log.info("<<<<<Driver initialized>>>");
-        driver.get(System.getProperty("appUrl"));
+        driverFactory = new DriverFactory();
     }
 
     @BeforeEach
     public void beforeEach() {
+        driver = driverFactory.getDriver();
+        log.info("<<<<<Driver initialized>>>");
+        driver.get(System.getProperty("appUrl"));
         homePage = new HomePage(driver);
         registerPage = new RegisterPage(driver);
         loginPage = new LoginPage(driver);
@@ -46,11 +46,10 @@ public class BaseTest {
         orderHistoryPage = new OrderHistoryPage(driver);
         basePage = new BasePage(driver);
 
-
     }
 
-    @AfterAll
-    static void quit() {
+    @AfterEach
+    void quit() {
         driver.quit();
         log.debug("<<<<<<driver closed properly>>>>>");
     }

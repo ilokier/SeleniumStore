@@ -1,6 +1,5 @@
 import Models.Product;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -22,11 +21,6 @@ public class CartTest extends BaseTest {
     Map<String, Integer> cartProductQuantityMap;
     SoftAssertions softAssertions = new SoftAssertions();
 
-    @AfterEach
-    public void after() {
-        productPage.goToCart();
-        cartPage.makeBasketEmpty();
-    }
 
     @Test
     public void shouldHaveChosenProductsInCart() throws InterruptedException {
@@ -39,7 +33,7 @@ public class CartTest extends BaseTest {
         popUpProduct = productPage.getPopUpProduct();
         String label = productPage.getLabelWithQuantity();
         productPage.continueShoping();
-        assertThat(randomProduct.toString().equals(popUpProduct.toString()));
+        assertThat(randomProduct).usingRecursiveComparison().isEqualTo(popUpProduct);
         assertThat(cartQuantityBefore).isEqualTo(productPage.getCartQuantity() - Integer.parseInt(randomProduct.getQuantity()));
         assertThat(label.contains(String.valueOf(productPage.getCartQuantity())));
 
@@ -59,7 +53,7 @@ public class CartTest extends BaseTest {
             productPage.continueShoping();
             driver.get(System.getProperty("appUrl"));
             int cartQuantityAfter = productPage.getCartQuantity();
-            softAssertions.assertThat(randomProduct.toString().equals(popUpProduct.toString()));
+            softAssertions.assertThat(randomProduct).usingRecursiveComparison().isEqualTo(popUpProduct);
             softAssertions.assertThat(cartQuantityBefore).isEqualTo(cartQuantityAfter - Integer.parseInt(randomProduct.getQuantity()));
             softAssertions.assertThat(label.contains(String.valueOf(cartQuantityAfter)));
 

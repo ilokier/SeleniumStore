@@ -15,7 +15,6 @@ public class AppProperties {
     private List<EnvironmentModel> listOfEnvironments;
 
     public AppProperties() {
-        setBrowserProperties();
         setEnvironmentProperties();
     }
 
@@ -40,13 +39,10 @@ public class AppProperties {
 
     }
 
-    private void setBrowserProperties() {
+    private Browser getBrowser() {
         browser = yamlReader.getConfig().getBrowser();
-        Map<String, Object> browserProperties = browser.getBrowserProperties();
-        for (Map.Entry entry : browserProperties.entrySet()) {
-            System.setProperty(entry.getKey().toString(), entry.getValue().toString());
-            log.info("Loaded browser properties: {} = {}", entry.getKey().toString(), entry.getValue().toString());
-        }
+        log.info("Browser: " + browser);
+        return browser;
     }
 
     private static class AppPropertiesSingleton {

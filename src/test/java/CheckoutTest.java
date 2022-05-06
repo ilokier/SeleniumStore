@@ -17,23 +17,22 @@ public class CheckoutTest extends BaseTest {
     Order orderConfirmed;
     Order historyOrder;
     SoftAssertions softAssertions = new SoftAssertions();
-    UserFactory userFactory = new UserFactory(driver);
+
 
     @BeforeEach
     public void before() {
         homePage.goToLoginPage();
         loginPage.goToRegistrationForm();
-        registerPage.fillRegisterForm(userFactory.getRandomUser());
+        registerPage.fillRegisterForm(new UserFactory(driver).getRandomUser());
         registerPage.submitRegistrationForm();
     }
 
     @Test
     public void shouldGoToOrderCheckoutWithSucess() {
-        addRandomProductsToCart(4); //change to 5
+        addRandomProductsToCart(3);//change to 5
         cartProducts = cartPage.getCartProducts();
         productPage.proceedToCheckout();
-        checkoutPage.fillAdressForm()
-                .continueCheckout();
+        checkoutPage.fillAdressForm();
         String chosenAddress = checkoutPage.getAddress();
         orderProducts = checkoutPage.getOrderProducts();
         String chocenShippingMethod = checkoutPage.selectShippingMethod();

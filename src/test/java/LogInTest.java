@@ -5,14 +5,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class LogInTest extends BaseTest {
-    UserFactory userFactory = new UserFactory(driver);
-
 
     @Test
     public void shouldRegisterUser() {
         homePage.goToLoginPage();
         loginPage.goToRegistrationForm();
-        registerPage.fillRegisterForm(userFactory.getRandomUser());
+        registerPage.fillRegisterForm(new UserFactory(driver).getRandomUser());
         String registeredUserData = registerPage.getUserData();
         registerPage.submitRegistrationForm();
         assertThat(registeredUserData, equalTo(homePage.getUserSignedName()));
@@ -21,7 +19,7 @@ public class LogInTest extends BaseTest {
     @Test
     public void shouldLogInExistingUser() {
         homePage.goToLoginPage();
-        loginPage.logIn(userFactory.getRegisteredUser());
+        loginPage.logIn(new UserFactory(driver).getRegisteredUser());
         assertThat(driver.getTitle(), equalTo(System.getProperty("expectedTitle")));
     }
 
