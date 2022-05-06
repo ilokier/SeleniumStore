@@ -45,7 +45,6 @@ public class BaseTest {
         orderConfirmationPage = new OrderConfirmationPage(driver);
         orderHistoryPage = new OrderHistoryPage(driver);
         basePage = new BasePage(driver);
-
     }
 
     @AfterEach

@@ -15,8 +15,6 @@ public class CategoriesPage extends BasePage {
     private WebElement categoryPageName;
     @FindBy(css = "#search_filters")
     private WebElement filterMenu;
-    //    @FindBy(css = ".ui-slider-range")
-//    private WebElement slider;
     @FindBy(css = ".faceted-slider")
     private WebElement sliderValues;
     @FindBy(css = ".ui-slider-horizontal  a:last-child")
@@ -32,7 +30,6 @@ public class CategoriesPage extends BasePage {
 
     @FindBy(css = "#js-product-list-header")
     private WebElement salePageTitle;
-
 
     public CategoriesPage(WebDriver driver) {
         super(driver);

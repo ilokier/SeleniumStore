@@ -42,7 +42,6 @@ public class ProductMiniaturePage {
     public int getDiscountValue() {
         String discount = getDiscount();
         discount = discount.replace("%", "").replace("-", "");
-        //String discount2 = discount.replace("-", "");
         log.info(discount);
         int priceValue = Integer.parseInt(discount);
         log.info("Discount is: " + priceValue);
