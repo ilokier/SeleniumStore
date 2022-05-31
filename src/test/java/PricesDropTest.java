@@ -11,7 +11,7 @@ public class PricesDropTest extends BaseTest {
             softAssertions.assertThat(categoriesPage.isRegularPriceDisplayed()).isTrue();
             softAssertions.assertThat(categoriesPage.isLabelWithDiscountDisplayed()).isTrue();
             softAssertions.assertThat(categoriesPage.getDiscountLabelText()).contains(System.getProperty("discount"));
-            softAssertions.assertThat(categoriesPage.getProductPriceList().get(i).equals(categoriesPage.getRegularProductPriceList().get(i) * categoriesPage.getDisountValue().get(i)));
+            softAssertions.assertThat(categoriesPage.getProductPriceList().get(i).equals(categoriesPage.getRegularProductPriceList().get(i) * categoriesPage.getDiscountValue().get(i)));
         }
         softAssertions.assertAll();
     }

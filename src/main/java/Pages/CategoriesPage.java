@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CategoriesPage extends BasePage {
     private static Logger log = LoggerFactory.getLogger("CategoriesPage.class");
@@ -43,11 +44,9 @@ public class CategoriesPage extends BasePage {
     }
 
     public boolean checkIfFilerMenuIsDisplayed() {
-        boolean isFilterDisplayed = false;
-        if (filterMenu.isDisplayed()) {
-            isFilterDisplayed = true;
+        boolean isFilterDisplayed = filterMenu.isDisplayed();
+        if (isFilterDisplayed) {
             log.info("There is filter for price between " + getCurrentFilterValues()[0] + " and " + getCurrentFilterValues()[1]);
-            return true;
         } else log.info("There is no filter");
         return isFilterDisplayed;
     }
@@ -83,9 +82,9 @@ public class CategoriesPage extends BasePage {
         List<Double> allPrices = new ArrayList<>();
         try {
             waitToListVisible(productMiniature);
-            for (WebElement product : productMiniature) {
-                allPrices.add(new ProductMiniaturePage(product).getProductPriceValue());
-            }
+            allPrices = productMiniature.stream()
+                    .map(product -> new ProductMiniaturePage(product).getProductPriceValue())
+                    .collect(Collectors.toList());
         } catch (StaleElementReferenceException e) {
             log.info("msg: " + e.getMessage());
         }
@@ -107,15 +106,15 @@ public class CategoriesPage extends BasePage {
         return getElementText(salePageTitle);
     }
 
+    //still learning stream
     public List<Double> getRegularProductPriceList() {
-        List<Double> regularPrices = new ArrayList<>();
-        for (WebElement product : productMiniature) {
-            regularPrices.add(new ProductMiniaturePage(product).getRegularPriceValue());
-        }
+        List<Double> regularPrices = productMiniature.stream()
+                .map(product -> new ProductMiniaturePage(product).getRegularPriceValue())
+                .collect(Collectors.toList());
         return regularPrices;
     }
 
-    public List<Integer> getDisountValue() {
+    public List<Integer> getDiscountValue() {
         List<Integer> discountValueList = new ArrayList<>();
         for (WebElement product : productMiniature) {
             discountValueList.add(new ProductMiniaturePage(product).getDiscountValue());
@@ -124,16 +123,14 @@ public class CategoriesPage extends BasePage {
     }
 
     public boolean isDiscountPriceDisplayed() {
-        boolean isDiscountDisplayed = false;
-        for (WebElement product : productMiniature) {
-            if (new ProductMiniaturePage(product).isPriceDisplayed()) {
-                isDiscountDisplayed = true;
-            } else {
-                log.info("Discount is not available");
-            }
+        boolean isDiscountDisplayed = productMiniature.stream()
+                .allMatch(product -> new ProductMiniaturePage(product).isPriceDisplayed());
+        if (!isDiscountDisplayed) {
+            log.info("Price is not displayed");
         }
         return isDiscountDisplayed;
     }
+
 
     public boolean isRegularPriceDisplayed() {
         boolean isRegularPriceDisplayed = false;
@@ -141,7 +138,7 @@ public class CategoriesPage extends BasePage {
             if (new ProductMiniaturePage(product).isRegularPriceDisplayed()) {
                 isRegularPriceDisplayed = true;
             } else {
-                log.info("Discount is not available");
+                log.info("Discount is not displayed");
             }
         }
         return isRegularPriceDisplayed;
