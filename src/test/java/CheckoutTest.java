@@ -7,12 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckoutTest extends BaseTest {
-    List<Product> cartProducts = new ArrayList<>();
-    List<Product> orderProducts = new ArrayList<>();
-    List<Product> orderConfirmationProducts = new ArrayList<>();
-    List<Product> lastOrderProducts = new ArrayList<>();
-    // Order orderConfirmed;
-    //Order historyOrder;
+    private List<Product> cartProducts = new ArrayList<>();
+    private List<Product> orderProducts = new ArrayList<>();
+    private List<Product> orderConfirmationProducts = new ArrayList<>();
+    private List<Product> lastOrderProducts = new ArrayList<>();
 
     @BeforeEach
     public void before() {

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilterTest extends BaseTest {
-    List<Double> filteredList = new ArrayList<>();
+    private List<Double> filteredList = new ArrayList<>();
 
     @ParameterizedTest
     @CsvSource({"9, 10", "9, 29", "27,29"})

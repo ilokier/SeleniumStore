@@ -1,5 +1,4 @@
 import Models.Product;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -13,14 +12,12 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class CartTest extends BaseTest {
     private static Logger log = LoggerFactory.getLogger("CartTest.class");
-    Product randomProduct;
-    Product popUpProduct;
-    List<Product> randomProducts = new ArrayList<>();
-    List<WebElement> cartProducts = new ArrayList<>();
-    Map<String, Integer> productQuantityMap;
-    Map<String, Integer> cartProductQuantityMap;
-    SoftAssertions softAssertions = new SoftAssertions();
-
+    private Product randomProduct;
+    private Product popUpProduct;
+    private List<Product> randomProducts = new ArrayList<>();
+    private List<WebElement> cartProducts = new ArrayList<>();
+    private Map<String, Integer> productQuantityMap;
+    private Map<String, Integer> cartProductQuantityMap;
 
     @Test
     public void shouldHaveChosenProductsInCart() throws InterruptedException {

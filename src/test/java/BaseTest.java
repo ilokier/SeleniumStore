@@ -18,18 +18,18 @@ public class BaseTest {
     protected static DriverFactory driverFactory;
     private static AppProperties appProperties;
     SoftAssertions softAssertions;
-    Order orderConfirmed;
-    Order historyOrder;
-    BasePage basePage;
-    HomePage homePage;
-    RegisterPage registerPage;
-    LoginPage loginPage;
-    CategoriesPage categoriesPage;
-    CartPage cartPage;
-    ProductPage productPage;
-    CheckoutPage checkoutPage;
-    OrderConfirmationPage orderConfirmationPage;
-    OrderHistoryPage orderHistoryPage;
+    protected Order orderConfirmed;
+    protected Order historyOrder;
+    protected BasePage basePage;
+    protected HomePage homePage;
+    protected RegisterPage registerPage;
+    protected LoginPage loginPage;
+    protected CategoriesPage categoriesPage;
+    protected CartPage cartPage;
+    protected ProductPage productPage;
+    protected CheckoutPage checkoutPage;
+    protected OrderConfirmationPage orderConfirmationPage;
+    protected OrderHistoryPage orderHistoryPage;
 
     @BeforeAll
     static void beforeAll() {
