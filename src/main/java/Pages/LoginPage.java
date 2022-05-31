@@ -20,13 +20,11 @@ public class LoginPage extends BasePage {
     @FindBy(css = ".no-account a")
     private WebElement createAccountLink;
 
-
     public LoginPage goToRegistrationForm() {
         clickOnElement(signInButton);
         clickOnElement(createAccountLink);
         return this;
     }
-
 
     public LoginPage logIn(User user) {
         sendKeysToElement(email, user.getEmail());

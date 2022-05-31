@@ -82,7 +82,6 @@ public class HomePage extends BasePage {
         return subCategoriesList.size();
     }
 
-
     public String searchRandomProduct() {
         String searchText = getRandomListElementText(productsList);
         sendKeysToElement(searchInput, searchText);
