@@ -126,6 +126,7 @@ public class BasePage {
 
     public void moveToElement(WebElement element) {
         waitToBeVisible(element);
+        log.info("<<<<<element " + element);
         actions.moveToElement(element).build().perform();
     }
 
