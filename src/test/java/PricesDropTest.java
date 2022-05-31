@@ -1,9 +1,6 @@
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 public class PricesDropTest extends BaseTest {
-    SoftAssertions softAssertions = new SoftAssertions();
-
     @Test
     public void shouldGoToSaleSiteAndGiveDiscountValues() {
         homePage.goToPricesDrop();

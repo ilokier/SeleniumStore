@@ -17,21 +17,5 @@ public class FilterTest extends BaseTest {
         categoriesPage.clearFilter();
         assertValueIsBetween(filteredList, minPrice, maxPrice);
     }
-
-    private static boolean assertValueIsBetween(List<Double> values, double min, double max) {
-        boolean condition = false;
-        if (values.isEmpty()) {
-            condition = true;
-        } else {
-            for (Double value : values) {
-                if (value >= min && value <= max) {
-                    condition = true;
-                }
-            }
-        }
-        return condition;
-    }
-
-
 }
 

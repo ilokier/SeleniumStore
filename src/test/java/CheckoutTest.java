@@ -1,7 +1,5 @@
-import Models.Order;
 import Models.Product;
 import Pages.UserFactory;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,15 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckoutTest extends BaseTest {
-
     List<Product> cartProducts = new ArrayList<>();
     List<Product> orderProducts = new ArrayList<>();
     List<Product> orderConfirmationProducts = new ArrayList<>();
     List<Product> lastOrderProducts = new ArrayList<>();
-    Order orderConfirmed;
-    Order historyOrder;
-    SoftAssertions softAssertions = new SoftAssertions();
-
+    // Order orderConfirmed;
+    //Order historyOrder;
 
     @BeforeEach
     public void before() {
@@ -59,21 +54,5 @@ public class CheckoutTest extends BaseTest {
         softAssertions.assertThat(orderConfirmed.getProducts().toString()).isEqualTo(historyOrder.getProducts().toString());
         softAssertions.assertThat(cartProducts.toString()).isEqualTo(orderProducts.toString());
         softAssertions.assertAll();
-    }
-
-    public void addRandomProductsToCart(int numberOfProducts) {
-        for (int i = 0; i < numberOfProducts; i++) {
-            homePage.goToRandomCategory();
-            categoriesPage.goToRandomProduct();
-            productPage.setRandomQuantity(5);
-            productPage.addToCart();
-            if (i < numberOfProducts - 1) {
-                productPage.continueShoping();
-                driver.get(System.getProperty("appUrl"));
-            } else {
-                productPage.proceedToCheckout();
-            }
-
-        }
     }
 }

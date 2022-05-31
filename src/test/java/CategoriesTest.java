@@ -1,12 +1,9 @@
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
 public class CategoriesTest extends BaseTest {
-
     @Test
     public void shouldDisplayEveryCategoryPage() {
         int categoriesAmount = homePage.getMainCategoriesSize();
-        SoftAssertions softAssertions = new SoftAssertions();
         for (int i = 0; i < categoriesAmount; i++) {
             homePage.goToCategoryPage(i);
             softAssertions.assertThat(homePage.getCategoryName().equals(categoriesPage.getCategoryName()));
@@ -19,7 +16,6 @@ public class CategoriesTest extends BaseTest {
     @Test
     public void shouldDisplayEverySubcategoryPage() {
         int categoriesAmount = homePage.getMainCategoriesSize();
-        SoftAssertions softAssertions = new SoftAssertions();
         for (int j = 0; j < categoriesAmount; j++) {
             homePage.goToMainCategory(j);
             int subCategoriesAmount = homePage.getSubCategoriesListSize();
