@@ -17,6 +17,7 @@ environment:
     expectedMsg: Form send with success
     discount: -20%
     saleCategoryName: ON SALE
+    maxQuantity: 5
     active: true
 
   test2:
@@ -31,4 +32,5 @@ environment:
     expectedMsg: Form send with success
     discount: -20%
     saleCategoryName: ON SALE
+    maxQuantity: 5
     active: false

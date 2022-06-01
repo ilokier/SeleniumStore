@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static javax.swing.UIManager.getInt;
+
 public class BaseTest {
     private static Logger log = LoggerFactory.getLogger("BaseTest.class");
     protected WebDriver driver;
@@ -62,14 +64,14 @@ public class BaseTest {
     @AfterEach
     void quit() {
         driver.quit();
-        log.debug("<<<<<<driver closed properly>>>>>");
+        log.info("<<<<<<driver closed properly>>>>>");
     }
 
     protected void addRandomProductsToCart(int numberOfProducts) {
         for (int i = 0; i < numberOfProducts; i++) {
             homePage.goToRandomCategory();
             categoriesPage.goToRandomProduct();
-            productPage.setRandomQuantity(5);
+            productPage.setRandomQuantity(getInt("maxQuantity"));
             productPage.addToCart();
             if (i < numberOfProducts - 1) {
                 productPage.continueShoping();

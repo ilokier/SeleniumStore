@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.System.getProperty;
+import static javax.swing.UIManager.getInt;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class CartTest extends BaseTest {
@@ -21,7 +23,7 @@ public class CartTest extends BaseTest {
     public void shouldHaveChosenProductsInCart() throws InterruptedException {
         homePage.goToRandomCategory();
         categoriesPage.goToRandomProduct();
-        productPage.setRandomQuantity(5);
+        productPage.setRandomQuantity(getInt("maxQuantity"));
         randomProduct = productPage.getRandomProduct();
         productPage.addToCart();
         popUpProduct = productPage.getPopUpProduct();
@@ -37,14 +39,14 @@ public class CartTest extends BaseTest {
         for (int i = 0; i < 3; i++) {
             homePage.goToRandomCategory();
             categoriesPage.goToRandomProduct();
-            productPage.setRandomQuantity(5);
+            productPage.setRandomQuantity(getInt("maxQuantity"));
             int cartQuantityBefore = productPage.getCartQuantity();
             randomProduct = productPage.getRandomProduct();
             productPage.addToCart();
             popUpProduct = productPage.getPopUpProduct();
             String label = productPage.getLabelWithQuantity();
             productPage.continueShoping();
-            driver.get(System.getProperty("appUrl"));
+            driver.get(getProperty("appUrl"));
             int cartQuantityAfter = productPage.getCartQuantity();
             softAssertions.assertThat(popUpProduct.getName()).isEqualTo(randomProduct.getName());
             softAssertions.assertThat(cartQuantityBefore).isEqualTo(cartQuantityAfter - Integer.parseInt(randomProduct.getQuantity()));
@@ -59,11 +61,11 @@ public class CartTest extends BaseTest {
         for (int i = 0; i < 5; i++) {
             homePage.goToRandomCategory();
             categoriesPage.goToRandomProduct();
-            productPage.setRandomQuantity(5);
+            productPage.setRandomQuantity(getInt("maxQuantity"));
             randomProducts.add(productPage.getRandomProduct());
             productPage.addToCart()
                     .continueShoping();
-            driver.get(System.getProperty("appUrl"));
+            driver.get(getProperty("appUrl"));
         }
         productQuantityMap = productPage.countQuantity(randomProducts);
         productPage.goToCart();
