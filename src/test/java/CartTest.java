@@ -12,8 +12,6 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class CartTest extends BaseTest {
     private static Logger log = LoggerFactory.getLogger("CartTest.class");
-    private Product randomProduct;
-    private Product popUpProduct;
     private List<Product> randomProducts = new ArrayList<>();
     private List<WebElement> cartProducts = new ArrayList<>();
     private Map<String, Integer> productQuantityMap;
@@ -24,14 +22,12 @@ public class CartTest extends BaseTest {
         homePage.goToRandomCategory();
         categoriesPage.goToRandomProduct();
         productPage.setRandomQuantity(5);
-        int cartQuantityBefore = productPage.getCartQuantity();
         randomProduct = productPage.getRandomProduct();
         productPage.addToCart();
         popUpProduct = productPage.getPopUpProduct();
         String label = productPage.getLabelWithQuantity();
         productPage.continueShoping();
         assertThat(randomProduct).usingRecursiveComparison().isEqualTo(popUpProduct);
-        assertThat(cartQuantityBefore).isEqualTo(productPage.getCartQuantity() - Integer.parseInt(randomProduct.getQuantity()));
         assertThat(label.contains(String.valueOf(productPage.getCartQuantity())));
 
     }
