@@ -77,7 +77,7 @@ public class CartPage extends BasePage {
             }
             log.info("Shipping: " + shipping);
         } else {
-            log.info("Shing is not present");
+            log.info("Shipping is not present");
         }
         return shipping;
     }

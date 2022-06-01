@@ -3,7 +3,6 @@ import Configuration.DriverFactory;
 import Models.Order;
 import Pages.*;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +17,8 @@ public class BaseTest {
     protected static DriverFactory driverFactory;
     private static AppProperties appProperties;
     SoftAssertions softAssertions;
+    //protected Product randomProduct;
+    //protected Product popUpProduct;
     protected Order orderConfirmed;
     protected Order historyOrder;
     protected Order order;
@@ -56,11 +57,11 @@ public class BaseTest {
         basePage = new BasePage(driver);
     }
 
-    @AfterEach
-    void quit() {
-        driver.quit();
-        log.debug("<<<<<<driver closed properly>>>>>");
-    }
+//    @AfterEach
+//    void quit() {
+//        driver.quit();
+//        log.debug("<<<<<<driver closed properly>>>>>");
+//    }
 
     protected void addRandomProductsToCart(int numberOfProducts) {
         for (int i = 0; i < numberOfProducts; i++) {
