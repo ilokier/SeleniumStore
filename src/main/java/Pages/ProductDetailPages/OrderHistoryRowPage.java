@@ -16,15 +16,15 @@ public class OrderHistoryRowPage {
 
     @FindBy(css = "[scope=row]")
     private WebElement orderReference;
-    @FindBy(xpath = "//td[1]")
+    @FindBy(css = "td:nth-child(2)")
     private WebElement orderDate;
-    @FindBy(xpath = "//td[2]")
+    @FindBy(css = "td:nth-child(3)")
     private WebElement orderTotalPrice;
-    @FindBy(xpath = "//td[3]")
+    @FindBy(css = "td:nth-child(4)")
     private WebElement paymentOption;
-    @FindBy(xpath = "//td[4]")
+    @FindBy(css = "td:nth-child(5)")
     private WebElement status;
-    @FindBy(xpath = "//td[6] /a[1]")
+    @FindBy(css = "td:nth-child(7) a:first-child")
     private WebElement orderDetailsLink;
 
     public String getOrderReference() {

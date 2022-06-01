@@ -11,7 +11,8 @@ public class OrderBuilder {
     private String shippingCost;
     private String status;
     private String date;
-    private String address;
+    private String invoiceAddress;
+    private String deliveryAddress;
 
 
     public OrderBuilder orderReference(String orderReference) {
@@ -54,8 +55,19 @@ public class OrderBuilder {
         return this;
     }
 
+    public OrderBuilder invoiceAddress(String address) {
+        this.invoiceAddress = address;
+        return this;
+    }
+
+
+    public OrderBuilder deliveryAddress(String address) {
+        this.deliveryAddress = address;
+        return this;
+    }
+
     public Order build() {
-        return new Order(orderReference, products, totalCost, paymentMethod, shippingMethod, shippingCost, status, date);
+        return new Order(orderReference, products, totalCost, paymentMethod, shippingMethod, shippingCost, status, date, invoiceAddress, deliveryAddress);
     }
 
 }

@@ -1,56 +1,45 @@
-import Models.Product;
+import Models.Order;
 import Pages.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CheckoutTest extends BaseTest {
-    private List<Product> cartProducts = new ArrayList<>();
-    private List<Product> orderProducts = new ArrayList<>();
-    private List<Product> orderConfirmationProducts = new ArrayList<>();
-    private List<Product> lastOrderProducts = new ArrayList<>();
-
     @BeforeEach
     public void before() {
         homePage.goToLoginPage();
         loginPage.goToRegistrationForm();
         registerPage.fillRegisterForm(new UserFactory(driver).getRandomUser());
         registerPage.submitRegistrationForm();
+        order = new Order();
+        historyOrder = new Order();
     }
 
     @Test
     public void shouldGoToOrderCheckoutWithSucess() {
-        addRandomProductsToCart(3);//change to 5
-        cartProducts = cartPage.getCartProducts();
+        addRandomProductsToCart(5);//change to 5
+        order.setProducts(cartPage.getCartProducts());
         productPage.proceedToCheckout();
-        checkoutPage.fillAdressForm();
-        String chosenAddress = checkoutPage.getAddress();
-        orderProducts = checkoutPage.getOrderProducts();
-        String chocenShippingMethod = checkoutPage.selectShippingMethod();
-        checkoutPage.confirmShipping();
-        String chosenPaymentMethod = checkoutPage.selectPaymentMethod();
+        checkoutPage.fillAdressForm()
+                .setOrderDetails(order, checkoutPage);
         softAssertions.assertThat(checkoutPage.hasAllTermsOfServiceText()).isTrue();
         checkoutPage.acceptTerms().confirmPayment();
-        orderConfirmed = orderConfirmationPage.getOrderDetails(orderConfirmationProducts = orderConfirmationPage.getOrderProducts());//do assertion, add date
+        orderConfirmed = orderConfirmationPage.getOrderDetails(orderConfirmationPage.getOrderProducts());
         orderConfirmationPage.goToOrderHistory();
-        String orderReference = orderConfirmed.getOrderReference();
-        lastOrderProducts = orderHistoryPage.getChosenOrderProducts(orderHistoryPage.searchOrder(orderReference));
-        String invoiceAddress = orderHistoryPage.getInvoiceAddress();
-        String deliveryAddress = orderHistoryPage.getDeliveryAddress();
-        orderHistoryPage.goBack();
-        historyOrder = orderHistoryPage.getChosenOrderDetails(lastOrderProducts, orderHistoryPage.searchOrder(orderReference));
+        historyOrder = orderHistoryPage.getHistoryOrderDetails(orderHistoryPage.searchOrder(order.getOrderReference()));
 
-        softAssertions.assertThat(historyOrder.getDate()).isEqualTo(basePage.getTodayDate());
-        softAssertions.assertThat(historyOrder.getStatus().contains(chosenPaymentMethod));
-        softAssertions.assertThat(orderConfirmed.getPaymentMethod()).containsIgnoringCase("bank");
-        softAssertions.assertThat(chosenPaymentMethod).containsIgnoringCase("bank");
-        softAssertions.assertThat(orderConfirmed.getShippingMethod().contains(chocenShippingMethod));
-        softAssertions.assertThat(chosenAddress).isEqualTo(invoiceAddress);
-        softAssertions.assertThat(chosenAddress).isEqualTo(deliveryAddress);
-        softAssertions.assertThat(orderConfirmed.getProducts().toString()).isEqualTo(historyOrder.getProducts().toString());
-        softAssertions.assertThat(cartProducts.toString()).isEqualTo(orderProducts.toString());
+        assertThat(order.getPaymentMethod()).containsIgnoringCase("bank");
+        assertThat(orderConfirmed.getPaymentMethod()).contains(historyOrder.getPaymentMethod());
+        assertThat(historyOrder.getPaymentMethod()).containsIgnoringCase("bank");
+        assertThat(order.getShippingMethod().contains("TesterSii"));
+        assertThat(order.getInvoiceAddress()).isEqualTo(historyOrder.getInvoiceAddress());
+        assertThat(order.getDeliveryAddress()).isEqualTo(historyOrder.getDeliveryAddress());
+        assertThat(orderConfirmed.getProducts()).isEqualTo(historyOrder.getProducts());
+        assertThat(order.getProducts()).isEqualTo(historyOrder.getProducts());
+        assertThat(historyOrder.getDate()).isEqualTo(basePage.getTodayDate());
+        assertThat(historyOrder.getStatus().contains(order.getPaymentMethod()));
+        assertThat(historyOrder.getStatus()).containsIgnoringCase("awaiting");
         softAssertions.assertAll();
     }
 }

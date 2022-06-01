@@ -15,7 +15,7 @@ import java.util.List;
 
 public class OrderConfirmationPage extends BasePage {
     Order order;
-    private static Logger log = LoggerFactory.getLogger("OrderConfirmation.class");
+    private static Logger log = LoggerFactory.getLogger("OrderConfirmationPage.class");
 
     @FindBy(css = ".order-line")
     private List<WebElement> orderProductsList;
@@ -59,15 +59,14 @@ public class OrderConfirmationPage extends BasePage {
                 .paymentMethod(getPaymentMethod())
                 .shippingMethod(getShippingMethod())
                 .shippingCost(getShippingCost()).build();
-        log.info("Order: " + order.toString());
+        log.info("Confirmed order details: " + order);
         return order;
     }
 
     public String getOrderNumber() {
         String orderNumber = getElementText(orderDetails.get(0));
-        log.info("number before: " + orderNumber);
         String orderNumber2 = orderNumber.replaceAll(".*: ", "");
-        log.info("after " + orderNumber2);
+        log.info("Order reference: " + orderNumber2);
         return orderNumber2;
     }
 

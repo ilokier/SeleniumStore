@@ -29,17 +29,18 @@ public class OrderHistoryPage extends BasePage {
         super(driver);
     }
 
-    public Order getChosenOrderDetails(List<Product> lastOrderProducts, int index) {
-
+    public Order getHistoryOrderDetails(int index) {
         Order chosenOrder = new OrderBuilder()
                 .orderReference(new OrderHistoryRowPage(orders.get(index)).getOrderReference())//check
-                .products(lastOrderProducts)//check
+                .products(getHistoryOrderProducts(index))//check
                 .totalCost(new OrderHistoryRowPage(orders.get(index)).getOrderTotalPrice())//check
                 .paymentMethod(new OrderHistoryRowPage(orders.get(index)).getPaymentOption())
                 .status(new OrderHistoryRowPage(orders.get(index)).getStatus())//check
                 .date(new OrderHistoryRowPage(orders.get(index)).getOrderDate())//check
+                .invoiceAddress(getInvoiceAddress(index))
+                .deliveryAddress(getDeliveryAddress())
                 .build();
-        log.info("Chosen order: " + chosenOrder.toString());
+        log.info("History order details: " + chosenOrder.toString());
         return chosenOrder;
     }
 
@@ -47,7 +48,7 @@ public class OrderHistoryPage extends BasePage {
         new OrderHistoryRowPage(orders.get(index)).getOrderDetailsLink().click();
     }
 
-    public List<Product> getChosenOrderProducts(int index) {
+    public List<Product> getHistoryOrderProducts(int index) {
         goToChosenOrderProducts(index);
         List<Product> products = new ArrayList<>();
         for (WebElement item : orderHistoryDetailProductList) {
@@ -55,7 +56,7 @@ public class OrderHistoryPage extends BasePage {
                     getQuantityValueOfProduct(getElementText(new OrderHistoryItemPage(item).getProductQuantity())),
                     getElementText(new OrderHistoryItemPage(item).getProductPrice())));
         }
-
+        driver.navigate().back();
         return products;
     }
 
@@ -75,14 +76,17 @@ public class OrderHistoryPage extends BasePage {
     }
 
     public String getDeliveryAddress() {
+
         String deliveryAddress = getElementText(this.deliveryAddress);
-        log.info("Delivery adress: " + deliveryAddress);
+        log.info("Delivery address: " + deliveryAddress);
+
         return deliveryAddress;
     }
 
-    public String getInvoiceAddress() {
+    public String getInvoiceAddress(int index) {
+        goToChosenOrderProducts(index);
         String invoiceAddress = getElementText(this.invoiceAddress);
-        log.info("Invoice adress: " + invoiceAddress);
+        log.info("Invoice address: " + invoiceAddress);
         return invoiceAddress;
     }
 }

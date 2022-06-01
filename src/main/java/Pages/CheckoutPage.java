@@ -1,5 +1,6 @@
 package Pages;
 
+import Models.Order;
 import Models.Product;
 import Pages.ProductDetailPages.OrderItemPage;
 import org.openqa.selenium.By;
@@ -86,7 +87,16 @@ public class CheckoutPage extends BasePage {
         return this;
     }
 
-    public String selectShippingMethod() {
+    public CheckoutPage setOrderDetails(Order order, CheckoutPage checkoutPage) {
+        order.setInvoiceAddress(checkoutPage.getAddress());
+        order.setDeliveryAddress(checkoutPage.getAddress());
+        order.setShippingMethod(checkoutPage.selectShippingMethod());
+        confirmShipping();
+        order.setPaymentMethod(selectPaymentMethod());
+        return checkoutPage;
+    }
+
+    private String selectShippingMethod() {
         WebElement random = getRandomListEl(deliveryOptionRow);
         WebElement randomRadio = random.findElement(By.cssSelector(".custom-radio"));
         String shippingMethod = random.findElement(By.cssSelector(".carrier-name")).getText();
@@ -95,7 +105,7 @@ public class CheckoutPage extends BasePage {
         return shippingMethod;
     }
 
-    public String selectPaymentMethod() {
+    private String selectPaymentMethod() {
         WebElement payment = paymentOptionsRow.get(1);
         WebElement paymentRadio = payment.findElement(By.cssSelector(".custom-radio"));
         String paymentMethod = payment.findElement(By.cssSelector("label span")).getText();
@@ -108,7 +118,7 @@ public class CheckoutPage extends BasePage {
     }
 
 
-    public CheckoutPage confirmShipping() {
+    private CheckoutPage confirmShipping() {
         clickOnElement(confirmShippingButton);
         return this;
     }

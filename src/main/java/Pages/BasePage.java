@@ -50,7 +50,7 @@ public class BasePage {
 
     public String getRandomBirthDate() {
         String birthday = format.format(faker.date().birthday(8, 16));
-        log.info(birthday);
+        log.info("Birthday date: " + birthday);
         return birthday;
     }
 

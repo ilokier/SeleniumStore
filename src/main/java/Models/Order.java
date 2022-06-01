@@ -20,5 +20,8 @@ public class Order {
     private String shippingCost;
     private String status;
     private String date;
+    private String invoiceAddress;
+    private String deliveryAddress;
+
 
 }

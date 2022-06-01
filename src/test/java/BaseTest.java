@@ -20,6 +20,7 @@ public class BaseTest {
     SoftAssertions softAssertions;
     protected Order orderConfirmed;
     protected Order historyOrder;
+    protected Order order;
     protected BasePage basePage;
     protected HomePage homePage;
     protected RegisterPage registerPage;
