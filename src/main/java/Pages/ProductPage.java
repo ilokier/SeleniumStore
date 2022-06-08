@@ -67,7 +67,7 @@ public class ProductPage extends BasePage {
 
 
     public ProductPage addToCart() {
-        moveToElement(addToCartButton);
+        moveAndWait(addToCartButton);
         clickOnElement(addToCartButton);
         return this;
     }

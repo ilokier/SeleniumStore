@@ -24,6 +24,7 @@ public class BasePage {
     static String datePattern = "MM/dd/yyyy";
     static SimpleDateFormat format = new SimpleDateFormat(datePattern);
 
+
     public BasePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
@@ -69,6 +70,7 @@ public class BasePage {
     public void clickOnElement(WebElement element) {
         waitForElementToBeClickable(element);
         highLightenerMethod(element);
+        waitForLoad();
         element.click();
     }
 
@@ -126,23 +128,24 @@ public class BasePage {
 
     public void moveToElement(WebElement element) {
         waitToBeVisible(element);
-        actions.moveToElement(element).build().perform();
+        actions.moveToElement(element).build();//wywaliłam performa
     }
 
-    public void scrollToElement(WebElement element) {
+    public void moveAndWait(WebElement element) {
         actions.moveToElement(element);
-        actions.perform();
         waitToBeVisible(element);
     }
 
-    public void moveToAndClick(WebElement element) {
-        moveToElement(element);
+    public void scrollAndClick(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", element);
         clickOnElement(element);
+
     }
 
     public void clickAndHold(WebElement element) {
         waitForElementToBeClickable(element);
-        actions.clickAndHold(element).build().perform();
+        actions.clickAndHold(element).build();
     }
 
     public void release() {
@@ -174,12 +177,23 @@ public class BasePage {
 
     public void highLightenerMethod(WebElement element) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
+        waitToBeVisible(element);
         js.executeScript("arguments[0].setAttribute('style', 'background: lightgreen; border: 5px solid green;')", element);
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+//    public boolean isPageLoaded() {
+//        return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString().equals("complete")
+//                && ((JavascriptExecutor) driver).executeScript("return jQuery.active").toString().equals("0");//todo implement in slider
+//    }
+
+    void waitForLoad() {
+        wait.until(ExpectedConditions.jsReturnsValue("return document.readyState==\"complete\";"));
+
     }
 
 }

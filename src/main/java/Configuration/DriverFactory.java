@@ -28,6 +28,7 @@ public class DriverFactory {
                 break;
             case FIREFOX:
                 driver = getFireFoxDriver();
+                driver.manage().window().maximize();
                 break;
             case IE:
                 driver = getIeDriver();

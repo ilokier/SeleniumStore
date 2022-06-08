@@ -33,7 +33,7 @@ public class RegisterPage extends BasePage {
     private List<WebElement> requiredCheckBoxList;
     @FindBy(css = ".form-control-submit")
     private WebElement submitButton;
-    private UserFactory userFactory;
+    //private UserFactory userFactory;
 
     public RegisterPage(WebDriver driver) {
         super(driver);

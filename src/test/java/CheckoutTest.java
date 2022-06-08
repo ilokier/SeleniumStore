@@ -17,8 +17,8 @@ public class CheckoutTest extends BaseTest {
     }
 
     @Test
-    public void shouldGoToOrderCheckoutWithSucess() {
-        addRandomProductsToCart(5);//change to 5
+    public void shouldGoToOrderCheckoutWithSucess() throws InterruptedException {
+        addRandomProductsToCart(5);
         order.setProducts(cartPage.getCartProducts());
         productPage.proceedToCheckout();
         checkoutPage.fillAdressForm()

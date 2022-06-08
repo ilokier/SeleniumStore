@@ -77,13 +77,14 @@ public class CheckoutPage extends BasePage {
     }
 
 
-    public CheckoutPage fillAdressForm() {
+    public CheckoutPage fillAdressForm() throws InterruptedException {
         sendKeysToElement(adress, getRandomAdress());
         sendKeysToElement(city, getRandomCity());
         sendKeysToElement(postalCode, getRandomPostalCode());
         checkInvoiceAdressBox();
         new Select(selectCountry).selectByValue("14");
-        moveToAndClick(confirmAddressButton);
+        Thread.sleep(100);
+        scrollAndClick(confirmAddressButton); //moveTo works fine on chrome
         return this;
     }
 
