@@ -23,6 +23,7 @@ public class BasePage {
     static Faker faker = new Faker();
     static String datePattern = "MM/dd/yyyy";
     static SimpleDateFormat format = new SimpleDateFormat(datePattern);
+    protected JavascriptExecutor jse;
 
 
     public BasePage(WebDriver driver) {
@@ -68,10 +69,15 @@ public class BasePage {
     }
 
     public void clickOnElement(WebElement element) {
-        waitForElementToBeClickable(element);
-        highLightenerMethod(element);
-        waitForLoad();
-        element.click();
+        try {
+            highLightenerMethod(element);
+            waitForLoad();
+            waitForElementToBeClickable(element);
+            element.click();
+        } catch (StaleElementReferenceException e) {
+            log.info("msg: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public String getRandomNumberValue(int bound) {
@@ -193,7 +199,24 @@ public class BasePage {
 
     void waitForLoad() {
         wait.until(ExpectedConditions.jsReturnsValue("return document.readyState==\"complete\";"));
+    }
 
+    public boolean isPageLoaded() {
+        return isDOMLoaded() && isAjaxCompletedTasks();
+    }
+
+    public boolean isDOMLoaded() {
+        String state = jse.executeScript("return document.readyState").toString();
+        return state.equals("complete");
+    }
+
+    public boolean isAjaxCompletedTasks() {
+        String state = jse.executeScript("return jQuery.active").toString();
+        return state.equals("0");
+    }
+
+    public void waitForLoad2() {
+        wait.until(driver -> isPageLoaded());
     }
 
 }

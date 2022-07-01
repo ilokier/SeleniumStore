@@ -1,17 +1,17 @@
+package Tests;
+
 import Models.Order;
 import Pages.UserFactory;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import steps.RegisterStep;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CheckoutTest extends BaseTest {
-    @BeforeEach
+    @BeforeMethod
     public void before() {
-        homePage.goToLoginPage();
-        loginPage.goToRegistrationForm();
-        registerPage.fillRegisterForm(new UserFactory(driver).getRandomUser());
-        registerPage.submitRegistrationForm();
+        new RegisterStep(driver).registerUser(new UserFactory(driver).getRandomUser());
         order = new Order();
         historyOrder = new Order();
     }

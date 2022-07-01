@@ -1,5 +1,8 @@
+package Tests;
+
 import Pages.UserFactory;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
+import steps.RegisterStep;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -8,12 +11,7 @@ public class LogInTest extends BaseTest {
 
     @Test
     public void shouldRegisterUser() {
-        homePage.goToLoginPage();
-        loginPage.goToRegistrationForm();
-        registerPage.fillRegisterForm(new UserFactory(driver).getRandomUser());
-        String registeredUserData = registerPage.getUserData();
-        registerPage.submitRegistrationForm();
-        assertThat(registeredUserData, equalTo(homePage.getUserSignedName()));
+        new RegisterStep(driver).registerUser(new UserFactory(driver).getRandomUser());
     }
 
     @Test

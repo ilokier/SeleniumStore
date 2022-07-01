@@ -83,7 +83,7 @@ public class CheckoutPage extends BasePage {
         sendKeysToElement(postalCode, getRandomPostalCode());
         checkInvoiceAdressBox();
         new Select(selectCountry).selectByValue("14");
-        Thread.sleep(100);
+        Thread.sleep(200);
         scrollAndClick(confirmAddressButton); //moveTo works fine on chrome
         return this;
     }

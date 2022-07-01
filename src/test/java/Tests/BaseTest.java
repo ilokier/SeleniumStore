@@ -1,26 +1,28 @@
+package Tests;
+
 import Configuration.AppProperties;
 import Configuration.DriverFactory;
 import Models.Order;
 import Models.Product;
 import Pages.*;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 
 import java.util.List;
 
 import static javax.swing.UIManager.getInt;
 
 public class BaseTest {
-    private static Logger log = LoggerFactory.getLogger("BaseTest.class");
+    private static Logger log = LoggerFactory.getLogger("Tests.BaseTest.class");
     protected WebDriver driver;
     protected static DriverFactory driverFactory;
     private static AppProperties appProperties;
-    SoftAssertions softAssertions;
+    public SoftAssertions softAssertions;
     protected Product randomProduct;
     protected Product popUpProduct;
     protected Order orderConfirmed;
@@ -37,13 +39,13 @@ public class BaseTest {
     protected OrderConfirmationPage orderConfirmationPage;
     protected OrderHistoryPage orderHistoryPage;
 
-    @BeforeAll
+    @BeforeSuite
     static void beforeAll() {
         appProperties = AppProperties.getInstance();
         driverFactory = new DriverFactory();
     }
 
-    @BeforeEach
+    @BeforeMethod
     public void beforeEach() {
         softAssertions = new SoftAssertions();
         driver = driverFactory.getDriver();
@@ -61,7 +63,7 @@ public class BaseTest {
         basePage = new BasePage(driver);
     }
 
-    @AfterEach
+    @AfterMethod
     void quit() {
         driver.quit();
         log.info("<<<<<<driver closed properly>>>>>");
@@ -96,4 +98,5 @@ public class BaseTest {
         }
         return condition;
     }
+
 }

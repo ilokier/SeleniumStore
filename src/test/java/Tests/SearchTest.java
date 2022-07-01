@@ -1,5 +1,7 @@
+package Tests;
+
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 

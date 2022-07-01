@@ -48,6 +48,7 @@ public class DriverFactory {
         ChromeOptions chromeOptions = new ChromeOptions();
         WebDriverManager.chromedriver().setup();
         chromeOptions.addArguments("start-maximized");
+        //addArguments("headless");
         return new ChromeDriver(chromeOptions);
     }
 

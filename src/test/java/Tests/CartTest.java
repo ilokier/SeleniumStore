@@ -1,8 +1,10 @@
+package Tests;
+
 import Models.Product;
-import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ import static javax.swing.UIManager.getInt;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class CartTest extends BaseTest {
-    private static Logger log = LoggerFactory.getLogger("CartTest.class");
+    private static Logger log = LoggerFactory.getLogger("Tests.CartTest.class");
     private List<Product> randomProducts = new ArrayList<>();
     private List<WebElement> cartProducts = new ArrayList<>();
     private Map<String, Integer> productQuantityMap;
@@ -34,7 +36,7 @@ public class CartTest extends BaseTest {
 
     }
 
-    @Test
+    @org.testng.annotations.Test
     public void shouldAddChosenProductsToCartMultipleTimes() throws InterruptedException {
         for (int i = 0; i < 3; i++) {
             homePage.goToRandomCategory();

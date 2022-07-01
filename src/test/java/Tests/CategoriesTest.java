@@ -1,4 +1,6 @@
-import org.junit.jupiter.api.Test;
+package Tests;
+
+import org.testng.annotations.Test;
 
 public class CategoriesTest extends BaseTest {
     @Test

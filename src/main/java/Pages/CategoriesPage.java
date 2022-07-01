@@ -63,7 +63,7 @@ public class CategoriesPage extends BasePage {
         return label;
     }
 
-    public void setPriceFilter(double minPrice, double maxPrice) {
+    public CategoriesPage setPriceFilter(double minPrice, double maxPrice) {
         try {
             setMaxPrice(maxPrice);
             setMinPrice(minPrice);
@@ -73,6 +73,7 @@ public class CategoriesPage extends BasePage {
         } catch (ElementNotInteractableException f) {
             log.info("msg: " + f.getMessage());
         }
+        return this;
     }
 
     public String[] getCurrentFilterValues() {
